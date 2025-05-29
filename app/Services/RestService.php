@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Services;
 
-use App\Http\Enumeration\ErrorCodes;
+use App\Enumeration\ErrorCodes;
 use Illuminate\Database\Eloquent\Model;
 
 class RestService
@@ -19,16 +19,37 @@ class RestService
     protected function checkModel(): string
     {
         if (!$this->model) {
-            throw new \Exception('Model not set, set model first', ErrorCodes::NullModel);
+            throw new \Exception('ОЙ-ей, модельки нет!', ErrorCodes::NullModel);
         }
         return $this->model;
     }
 
     /** @throws \Exception set model first */
-    public function getPagination(int $perPage)
+    public function getPagination(array $meta, int $perPage)
     {
-        return $this->checkModel()->paginamte($perPage);
+        $this->checkModel();
+        if (!key_exists('columns', $meta)) {
+            return $meta;
+        }
+        $query = $this->model::select(array_keys($meta['columns']));
+
+        if (key_exists('leftJoins', $meta)) {
+            $query = $this->connectLeftJoins($meta['leftJoins'], $query, app($this->model)->getTable());
+        }
+        return $query->paginate($perPage);
     }
+    protected function connectLeftJoins(array $leftJoins, $query, $mainTable)
+    {
+        foreach ($leftJoins as $leftJoin) {
+            $query = $query->leftJoin($leftJoin['table'], "{$leftJoin['table']}.id", '=', "{$mainTable}.{$leftJoin['foreignKey']}");
+            if (key_exists('leftJoins', $leftJoin)) {
+                $query = $this->connectLeftJoins($leftJoin['leftJoins'], $query, $leftJoin['table']);
+            }
+        }
+
+        return $query;
+    }
+
 
     /** @throws \Exception set model first */
     public function getById(int $id)
@@ -51,7 +72,7 @@ class RestService
     }
 
     /** @throws \Exception set model first */
-    public function delete( int|array|Model $trash)
+    public function delete(int|array|Model $trash)
     {
         if ($trash instanceof Model) {
             return $trash->delete();

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Enumeration;
+namespace App\Enumeration;
 
 enum BillStatus
 {

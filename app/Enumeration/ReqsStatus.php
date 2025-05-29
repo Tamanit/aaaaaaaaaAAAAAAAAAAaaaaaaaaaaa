@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Enumeration;
+namespace App\Enumeration;
 
-enum BookingStatus
+enum ReqsStatus
 {
     use EnumerationToArray;
 
+    case Sent;
     case Canceled;
-    case Active;
+    case WorkOn;
     case Closed;
 }

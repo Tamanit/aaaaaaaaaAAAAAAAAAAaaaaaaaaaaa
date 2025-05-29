@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Services;
 
-use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 
 class AuthService
