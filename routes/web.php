@@ -11,5 +11,6 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    dd(\App\Http\Enumeration\ErrorCodes::cases());
     Route::inertia('/', "Welcome")->name('welcomes');
 });
