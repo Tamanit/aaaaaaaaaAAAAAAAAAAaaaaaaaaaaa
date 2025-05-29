@@ -44,12 +44,12 @@ services:
       POSTGRES_USER: '${DB_USERNAME}'
       POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
     volumes:
-      - 'database:/var/lib/postgresql/data'
+      - 'database1:/var/lib/postgresql/data'
 
 networks:
   default:
     driver: bridge
 
 volumes:
-  database:
+  database1:
     driver: local
