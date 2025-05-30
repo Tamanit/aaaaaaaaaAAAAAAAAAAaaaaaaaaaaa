@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Enumeration\ActType;
 use App\Models\ActRow;
 use App\Models\Contract;
+use App\Models\Rent;
+use App\Models\RentUnit;
 use App\Services\RestService;
 
 class ActRowController extends RestController
@@ -16,38 +18,31 @@ class ActRowController extends RestController
         $this->indexMeta = [
             'columns' => [
                 'id' => 'id',
-                'act_type' => 'Тип',
-                'signed' => 'Подпись'
+                'act_id' => 'Акт',
+                'rent_unit_id' => 'Аренда',
+                'technical_condition' => 'Состояние'
             ],
             'toolbarButtons' => [
-                ['title' => 'Подписать', 'link' => 'acts/sign'],
+                [],
             ]
         ];
 
-        $lines = (new ActController($restService))->createMeta['inputs'];
+        $lines = (new ActRowController($restService))->createMeta['inputs'];
         unset($lines[0]);
         $lines = array_values($lines);
 
         $this->createMeta = [
             'inputs' => [
                 [
-                    'label' => 'Договор',
-                    'type' => 'select',
-                    'name' => 'contract_id',
-                    'options' => Contract::select('contract.id as key', 'contract.contract_num as value')
-                        ->get()
-                        ->toArray()
+                    'label'=> 'Техническое состояние',
+                    'type'=> 'text',
+                    'name'=> 'technical_condition',
                 ],
                 [
-                    'label' => 'Тип акта',
-                    'type' => 'select',
-                    'name' => 'act_type',
-                    'options' => ActType::toArray(),
-                ],
-                [
+                    'label' => 'Предмет аренды',
                     'type' => 'table',
-                    'model' => ActRow::class,
-                    'condition' => 'act_id',
+                    'model' => RentUnit::class,
+                    'condition' => 'rent_unit_id',
                     'lines' => $lines,
                 ]
             ]

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Act extends Model
@@ -17,10 +18,11 @@ class Act extends Model
         'act_type_id',
     ];
 
-    public function contract()
+    public function rent()
     {
-        return $this->belongsTo('App\Models\Contract');
+        return $this->belongsTo(Rent::class);
     }
+
     public function bill()
     {
         return $this->hasOne('App\Models\Bill');

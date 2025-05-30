@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('acts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('contract_id')->constrained('contracts');
+            $table->foreignId('rent_id')->constrained('rent');
             $table->boolean('signed')->default(false);
             $table->enum('act_type', \App\Enumeration\ActType::toArray());
             $table->timestamps();

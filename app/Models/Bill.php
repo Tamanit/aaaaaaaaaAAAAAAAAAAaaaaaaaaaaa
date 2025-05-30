@@ -9,6 +9,7 @@ class Bill extends Model
 {
     use SoftDeletes;
 
+
     public function payments()
     {
         return $this->hasMany('App\Models\Payment');

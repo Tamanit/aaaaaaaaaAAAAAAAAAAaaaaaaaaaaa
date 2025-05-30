@@ -1,9 +1,10 @@
 import {Button, Col, FormFeedback, FormGroup, Input, Label, Row} from "reactstrap";
 import ClearLayout from "../layouts/ClearLayout.jsx";
+import DefaultLayout from "@/layouts/DefaultLayout.jsx";
 
 export default () => {
     return (
-        <ClearLayout>
+        <DefaultLayout>
             <Row>
                 <Col
                     className="
@@ -13,6 +14,6 @@ export default () => {
                     "
                 >Hello world!</Col></Row>
 
-        </ClearLayout>
+        </DefaultLayout>
     )
 }

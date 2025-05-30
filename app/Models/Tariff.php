@@ -14,4 +14,7 @@ class Tariff extends Model
     public function bookingTime(){
         return $this->hasMany('App\Models\BookingTime');
     }
+    public function rent(){
+        return $this->hasMany('App\Models\Rent');
+    }
 }
