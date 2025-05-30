@@ -9,7 +9,6 @@ export default () => {
 
     function handleSubmit(e) {
         e.preventDefault();
-
         router.post(
             '/login',
             new FormData(e.target)

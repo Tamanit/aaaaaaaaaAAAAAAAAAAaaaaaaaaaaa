@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('price_id')->constrained('prices');
             $table->foreignId('tariff_id')->constrained('tariffs');
             $table->foreignId('act_id')->constrained('acts');
-            $table->enum('status',\App\Enumeration\RentStatus::toArray());
+            $table->enum('status',\App\Shared\Enumeration\RentStatus::toArray());
             $table->timestamps();
         });
     }
