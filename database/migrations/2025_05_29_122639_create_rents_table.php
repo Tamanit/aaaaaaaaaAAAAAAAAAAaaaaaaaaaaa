@@ -18,8 +18,9 @@ return new class extends Migration
             $table->timestamp('rent_at');
             $table->foreignId('organization_id')->constrained('organizations');
             $table->foreignId('price_id')->constrained('prices');
-            $table->foreignId('contract_id')->constrained('contracts');
-            $table->enum('status', \App\Shared\Enumeration\RentStatus::toArray());
+            $table->foreignId('tariff_id')->constrained('tariffs');
+            $table->foreignId('act_id')->constrained('acts');
+            $table->enum('status',\App\Shared\Enumeration\RentStatus::toArray());
             $table->timestamps();
         });
     }

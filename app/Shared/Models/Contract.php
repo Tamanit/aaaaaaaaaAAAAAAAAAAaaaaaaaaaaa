@@ -14,11 +14,13 @@ class Contract extends Model
         'contract_num',
         '1c_contract_num',
     ];
-    public function act(){
-        return $this->HasMany('App\Shared\Models\Act');
-    }
+
     public function rent(){
         return $this->HasMany('App\Shared\Models\Rent');
+    }
+    public function acts(): MorphMany
+    {
+        return $this->morphMany(Act::class, 'targetable');
     }
     public function req(): MorphMany
     {

@@ -17,10 +17,11 @@ class Act extends Model
         'act_type_id',
     ];
 
-    public function contract()
+    public function rent()
     {
-        return $this->belongsTo('App\Shared\Models\Contract');
+        return $this->belongsTo(Rent::class);
     }
+
     public function bill()
     {
         return $this->hasOne('App\Shared\Models\Bill');

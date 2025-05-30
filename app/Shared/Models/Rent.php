@@ -15,10 +15,15 @@ class Rent extends Model
         'number_of_places',
         'rent_at',
         'contract_id',
+        'tariff_id',
         'status'
     ];
     public function contract(){
         return $this->belongsTo('App\Shared\Models\Contract');
+    }
+    public function act()
+    {
+        return $this->hasMany('App\Models\Act');
     }
     public function workplace(){
         return $this->hasMany('App\Shared\Models\Workplace');
@@ -32,5 +37,8 @@ class Rent extends Model
     public function req(): MorphMany
     {
         return $this->morphMany(Req::class, 'targetable');
+    }
+    public function tariff(){
+        return $this->belongsTo('App\Models\Tariff');
     }
 }
