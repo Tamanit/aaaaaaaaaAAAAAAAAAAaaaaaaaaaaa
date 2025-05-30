@@ -17,12 +17,12 @@ return new class extends Migration
             $table->string('ur_address');
             $table->string('post_address');
             $table->string('bank');
-            $table->string('inn');
-            $table->string('kpp');
-            $table->string('bank_account');
-            $table->string('bank_corr_account');
-            $table->string('bik');
-            $table->string('okpo');
+            $table->string('inn', 12);
+            $table->string('kpp', 9);
+            $table->string('bank_account', 20);
+            $table->string('bank_corr_account', 20);
+            $table->string('bik', 9);
+            $table->string('okpo', 8);
             $table->softDeletes();
         });
     }

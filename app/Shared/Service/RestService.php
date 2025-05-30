@@ -2,6 +2,7 @@
 
 namespace App\Shared\Service;
 
+use App\ManagerLk\Http\Requset\UserRequest;
 use App\Shared\Dto\FormDto\Factory\FormMetaInputFactory;
 use App\Shared\Dto\FormDto\FormMeta;
 use App\Shared\Dto\FormDto\FormMetaInput;
@@ -13,11 +14,12 @@ use App\Shared\Dto\ShowDto\ShowMetaBlock;
 use App\Shared\Enumeration\ErrorCodes;
 use App\Shared\Enumeration\InputTypes;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 class RestService
 {
-    protected string $model;
+    protected string $model = '';
     protected const ROWS_PER_PAGE = 20;
 
     public function __construct(
@@ -43,13 +45,13 @@ class RestService
     /** @throws \Exception не задана модель */
     public function getPagination(IndexMeta $meta)
     {
-        $query = $this->checkModel()::select($meta->columns->pluck('attribute'));
+        $query = $this->checkModel()::whereNotNull('id');
 
         if ($meta->leftJoins !== null) {
             $this->connectLeftJoin($meta->leftJoins, $query, app($this->model)->getTable());
         }
 
-        return $query->paginate(self::ROWS_PER_PAGE);
+        return ($query->paginate(self::ROWS_PER_PAGE, $meta->columns->pluck('attribute')->toArray()));
     }
 
     protected function connectLeftJoin(Collection $leftJoins, Builder &$query, string $mainTable): void
@@ -86,7 +88,9 @@ class RestService
         if ($id === null) {
             $this->checkModel()::create($data);
         } else {
-            $this->checkModel()::findOrFail($id)->update($data);
+            $model = $this->checkModel()::findOrFail($id);
+            $model->update($data);
+            $model->save();
         }
     }
 
@@ -132,5 +136,18 @@ class RestService
         });
 
         return $meta;
+    }
+
+    public function getRequest(Request $request, string $formRequest = null): array
+    {
+        if ($formRequest === null) {
+            return $request->all();
+        } else {
+            $formRequest = app(UserRequest::class);
+            $formRequest = $formRequest->createFrom($request);
+            $formRequest->setContainer(app())->setRedirector(app('redirect'));
+
+            return $formRequest->validated();
+        }
     }
 }

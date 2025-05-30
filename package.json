@@ -5,7 +5,7 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite",
-        "watch": "vite build --watch"
+        "watch": "vite build --watch --emptyOutDir"
     },
     "devDependencies": {
         "@headlessui/react": "^2.0.0",

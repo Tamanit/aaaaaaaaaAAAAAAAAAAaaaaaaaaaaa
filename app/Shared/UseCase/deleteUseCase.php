@@ -11,9 +11,10 @@ class deleteUseCase
     ) {
     }
 
-    public function use(int $id): void
+    public function use(int $id, string $model): void
     {
         try {
+            $this->managerLkRestService->setModel($model);
             $this->managerLkRestService->deleteById($id);
         } catch (\Exception $exception) {
             abort(404, $exception->getMessage());

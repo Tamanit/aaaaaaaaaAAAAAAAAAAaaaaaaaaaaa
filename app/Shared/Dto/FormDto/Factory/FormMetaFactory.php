@@ -14,6 +14,7 @@ class FormMetaFactory
     public function make(array $data): FormMeta
     {
         return new FormMeta(
+            $data['h2'],
             $data['page'],
             $this->formMetaInputFactory->makeCollection($data['inputs']),
         );

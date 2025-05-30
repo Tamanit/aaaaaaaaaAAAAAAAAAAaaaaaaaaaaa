@@ -1,11 +1,9 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head, usePage} from '@inertiajs/react';
-import DefaultLayout from "@/layouts/DefaultLayout.jsx";
-import {Alert, Badge, Button, Col, Container, Form, FormGroup, Input, Label, Table} from "reactstrap";
-import ManagerLayout from "@/layouts/ManagerLayout.jsx";
+import {Alert, Button, Col, Container, Form, FormGroup, Input, Label, Table} from "reactstrap";
+import ManagerLayout from "@/Layouts/ManagerLayout.jsx";
 
 export default function ManagerRent() {
-    const {organisations} = usePage().props;
+    // const {organisations} = usePage().props;
     return (
         <ManagerLayout>
             <Head title="Создание акта"/>

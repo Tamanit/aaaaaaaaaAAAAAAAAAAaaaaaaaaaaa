@@ -12,8 +12,9 @@ class getUpdateFormUseCase
     ) {
     }
 
-    public function use(FormMeta $meta, string $route, int $id): FormMeta
+    public function use(FormMeta $meta, string $model, string $route, int $id): FormMeta
     {
+        $this->managerLkRestService->setModel($model);
         $meta = $this->managerLkRestService->insertValuesInInput($meta, $id);
         return $this->managerLkRestService->insertCsrfTokenAndSubmitLink($meta, $route);
     }

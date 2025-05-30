@@ -1,8 +1,6 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head, usePage} from '@inertiajs/react';
-import DefaultLayout from "@/layouts/DefaultLayout.jsx";
-import {Alert, Badge, Button, Container, Table} from "reactstrap";
-import ManagerLayout from "@/layouts/ManagerLayout.jsx";
+import {Alert, Container, Table} from "reactstrap";
+import ManagerLayout from "@/Layouts/ManagerLayout.jsx";
 
 export default function ManagerRent() {
     const {rents} = usePage().props;
