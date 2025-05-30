@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('contract_id')->constrained('contracts');
             $table->boolean('signed')->default(false);
-            $table->enum('act_type', \App\Enumeration\ActType::toArray());
+            $table->enum('act_type', \App\Shared\Enumeration\ActType::toArray());
             $table->timestamps();
             $table->softDeletes();
         });

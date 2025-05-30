@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp('book_at');
             $table->timestamp('book_until');
             $table->integer('time_in_minutes');
-            $table->enum('status', \App\Enumeration\BookingStatus::toArray());
+            $table->enum('status', \App\Shared\Enumeration\BookingStatus::toArray());
             $table->softDeletes();
             $table->timestamps();
         });

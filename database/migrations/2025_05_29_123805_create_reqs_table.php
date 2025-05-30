@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('reqs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->enum('request_type', \App\Enumeration\ReqType::toArray());
+            $table->enum('request_type', \App\Shared\Enumeration\ReqType::toArray());
             $table->integer('targetable_id');
             $table->string('targetable_type');
             $table->text('message');
