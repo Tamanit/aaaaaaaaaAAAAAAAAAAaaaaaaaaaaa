@@ -1,12 +1,12 @@
 <?php
 
-use App\ManagerLk\Http\Controller\OrganizationController;
-use App\ManagerLk\Http\Controller\PriceListController;
-use App\ManagerLk\Http\Controller\RentUnitController;
-use App\ManagerLk\Http\Controller\RentUnitTypeController;
-use App\ManagerLk\Http\Controller\TariffController;
-use App\ManagerLk\Http\Controller\UserController;
-use App\RentLk\Http\Controller\BookingController;
+use App\Http\Controllers\ManagerLk\OrganizationController;
+use App\Http\Controllers\ManagerLk\PriceListController;
+use App\Http\Controllers\ManagerLk\RentUnitController;
+use App\Http\Controllers\ManagerLk\RentUnitTypeController;
+use App\Http\Controllers\ManagerLk\TariffController;
+use App\Http\Controllers\ManagerLk\UserController;
+use App\Http\Controllers\TenantLk\BookingController;
 use App\RentLk\ViewConfigFactory\TariffViewConfigFactory;
 use Illuminate\Support\Facades\Route;
 
@@ -62,7 +62,7 @@ Route::inertia('/lk', 'rentLk/Dashboard');
 //];
 
 $controllers = [
-    \App\RentLk\Http\Controller\RentUnitTypeController::class,
+    \App\Http\Controllers\TenantLk\RentUnitTypeController::class,
     UserController::class,
     OrganizationController::class,
     RentUnitTypeController::class,

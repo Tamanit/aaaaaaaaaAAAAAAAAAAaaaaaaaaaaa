@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('bills', function (Blueprint $table) {
             $table->id();
             $table->string('1c_billing_num')->nullable();
-            $table->enum('status', \App\Shared\Enumeration\BillStatus::toArray());
+            $table->enum('status', \App\Services\Shared\Enumeration\BillStatus::toArray());
             $table->integer('sum_in_kopeck');
             $table->foreignId('act_id')->constrained('acts');
             $table->timestamps();

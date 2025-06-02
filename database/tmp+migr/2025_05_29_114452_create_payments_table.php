@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->enum('status', \App\Shared\Enumeration\PaymentStatus::toArray());
+            $table->enum('status', \App\Services\Shared\Enumeration\PaymentStatus::toArray());
             $table->string('sum_in_kopeck');
             $table->foreignId('bill_id')->constrained('bills');
             $table->timestamps();

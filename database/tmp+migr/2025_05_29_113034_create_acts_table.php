@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('rent_id')->constrained('rent');
             $table->boolean('signed')->default(false);
-            $table->enum('act_type', \App\Shared\Enumeration\ActType::toArray());
+            $table->enum('act_type', \App\Services\Shared\Enumeration\ActType::toArray());
             $table->timestamps();
             $table->softDeletes();
         });

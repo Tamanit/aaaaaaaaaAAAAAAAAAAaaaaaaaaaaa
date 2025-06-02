@@ -1,7 +1,7 @@
 <?php
 
 $controllers = [
-    \App\ManagerLk\Http\Controller\UserController::class,
+    \App\Http\Controllers\ManagerLk\UserController::class,
 ];
 
 //Route::group(['middleware' => 'auth'], function () use ($controllers) {
