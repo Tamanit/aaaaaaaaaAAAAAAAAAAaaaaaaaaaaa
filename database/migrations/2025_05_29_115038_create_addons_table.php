@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('addons', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('price_list_id')->constrained('price_lists');
+            $table->string('description')->nullable();
+            $table->foreignId('tariff_id')->constrained('tariffs');
         });
     }
 

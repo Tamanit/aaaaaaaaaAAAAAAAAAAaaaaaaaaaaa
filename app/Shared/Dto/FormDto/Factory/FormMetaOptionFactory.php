@@ -16,7 +16,7 @@ class FormMetaOptionFactory
     }
 
     public function makeCollection(array $data): Collection
-    {
+    {;
         return new Collection(
             array_map(function ($item) {
                 return $this->make($item);

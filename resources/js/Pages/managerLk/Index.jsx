@@ -1,17 +1,17 @@
 import ManagerLayout from "@/Layouts/ManagerLayout.jsx";
-import {  route } from "@/Layouts/ManagerLayout.jsx";
+import {route} from "@/Layouts/ManagerLayout.jsx";
 import {
     Alert,
-    Button,
+    Button, Card, CardBody,
     Col,
     Container,
     Nav,
     NavItem, NavLink,
     Pagination,
     PaginationItem,
-    PaginationLink,
+    PaginationLink, PopoverBody, PopoverHeader,
     Row,
-    Table
+    Table, UncontrolledCollapse, UncontrolledPopover
 } from "reactstrap";
 import {Link, router} from "@inertiajs/react";
 
@@ -24,7 +24,7 @@ export default ({meta, paginator}) => {
                         <h2>{meta.h2}</h2>
                         <Alert color="info">Всего записей: {paginator.total}</Alert>
                         <Nav pills>
-                            <NavItem><NavLink href={window.location.pathname + '/create' } onClick={route}>Создать <i
+                            <NavItem><NavLink href={window.location.pathname + '/create'} onClick={route}>Создать <i
                                 className="ni ni-fat-add"></i></NavLink></NavItem>
                         </Nav>
                     </Col>
@@ -44,7 +44,34 @@ export default ({meta, paginator}) => {
                             {paginator.data.map((row, i) => {
                                 return (<tr>
                                     {meta.columns.map((columnName, i) => {
-                                        return (<td key={i}>{row[columnName.attribute]}</td>)
+                                        let columnNameShort = columnName.attribute.substring(columnName.attribute.indexOf('.') + 1);
+
+                                        return (<td key={i}>{
+                                            typeof !(typeof row[columnNameShort] || row[columnNameShort] instanceof String) && row[columnNameShort].length > 50
+                                                ?
+                                                <>
+                                                    <Button
+                                                        size="sm"
+                                                        color="info"
+                                                        id={'toggler_' + i}
+
+                                                    >. . .</Button>
+                                                    <UncontrolledCollapse
+                                                        toggler={'#toggler_' + i}
+                                                    >
+                                                        <Card>
+                                                            <CardBody>
+                                                                <pre>
+                                                                    {row[columnNameShort]}
+                                                                </pre>
+                                                            </CardBody>
+                                                        </Card>
+                                                    </UncontrolledCollapse>
+                                                </>
+                                                : row[columnNameShort]
+
+
+                                        }</td>)
                                     })}
                                     <td
                                         className="d-flex flex-row-reverse gap-2"
@@ -53,7 +80,7 @@ export default ({meta, paginator}) => {
                                               method="DELETE"><i className=" ni ni-fat-remove"></i></Link>
 
                                         <Link href={window.location.pathname + '/' + row.id + '/edit'}><i
-                                        className="ni ni-settings-gear-65"></i></Link>
+                                            className="ni ni-settings-gear-65"></i></Link>
                                     </td>
                                 </tr>)
                             })}
@@ -65,23 +92,44 @@ export default ({meta, paginator}) => {
                     <Col className=" d-flex justify-content-center">
                         <Pagination className=" d-flex justify-content-center gap-3">
                             <PaginationItem>
-                                <PaginationLink first href={paginator.first_page_url} onClick={(e) => {e.preventDefault(); router.visit(paginator.first_page_url)}}/>
+                                <PaginationLink first href={paginator.first_page_url} onClick={(e) => {
+                                    e.preventDefault();
+                                    router.visit(paginator.first_page_url)
+                                }}/>
                             </PaginationItem>
                             {
                                 paginator.prev_page_url
-                                ? <PaginationItem><PaginationLink previous href={paginator.prev_page_url} onClick={(e) => {e.preventDefault(); router.visit(paginator.prev_page_url)}}/></PaginationItem>
-                                : null
+                                    ? <PaginationItem><PaginationLink previous
+                                                                      href={paginator.prev_page_url}
+                                                                      onClick={(e) => {
+                                                                          e.preventDefault();
+                                                                          router.visit(paginator.prev_page_url)
+                                                                      }}/></PaginationItem>
+                                    : null
                             }
-                            { paginator.links.slice(1, paginator.links.length - 1).map((link) => {
-                                return (<PaginationItem disabled={!link.url} active={link.active}><PaginationLink href={link.url} onClick={(e) => {e.preventDefault(); router.visit(link.url)}}>{link.label}</PaginationLink> </PaginationItem>)
+                            {paginator.links.slice(1, paginator.links.length - 1).map((link) => {
+                                return (<PaginationItem disabled={!link.url}
+                                                        active={link.active}><PaginationLink
+                                    href={link.url} onClick={(e) => {
+                                    e.preventDefault();
+                                    router.visit(link.url)
+                                }}>{link.label}</PaginationLink> </PaginationItem>)
                             })}
                             {
                                 paginator.next_page_url
-                                    ? <PaginationItem><PaginationLink next href={paginator.next_page_url} onClick={(e) => {e.preventDefault(); router.visit(paginator.next_page_url)}}/></PaginationItem>
+                                    ?
+                                    <PaginationItem><PaginationLink next href={paginator.next_page_url}
+                                                                    onClick={(e) => {
+                                                                        e.preventDefault();
+                                                                        router.visit(paginator.next_page_url)
+                                                                    }}/></PaginationItem>
                                     : null
                             }
                             <PaginationItem>
-                                <PaginationLink last href={paginator.last_page_url} onClick={(e) => {e.preventDefault(); router.visit(paginator.last_page_url)}}/>
+                                <PaginationLink last href={paginator.last_page_url} onClick={(e) => {
+                                    e.preventDefault();
+                                    router.visit(paginator.last_page_url)
+                                }}/>
                             </PaginationItem>
 
                         </Pagination>

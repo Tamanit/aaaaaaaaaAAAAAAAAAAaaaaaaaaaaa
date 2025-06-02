@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
+            $table->string('img')->nullable();
+            $table->string('ing_alt')->nullable();
         });
     }
 

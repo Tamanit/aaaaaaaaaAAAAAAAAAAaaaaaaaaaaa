@@ -49,6 +49,7 @@ class RestController extends Controller
         return Inertia::render($this->viewConfig->indexMeta->page, [
             'meta' => $this->viewConfig->indexMeta,
             'paginator' => $this->getIndexUseCase->use($this->model, $this->viewConfig->indexMeta),
+            'linkToPublic' => asset('/img/'),
         ]);
     }
 
@@ -61,9 +62,15 @@ class RestController extends Controller
 
     public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
+
         $this->saveOrUpdateUseCase->use($request, $this->model, null, $this->createRequest);
 
-        return redirect()->route($this::$route . '.index');
+        if ($request->query('again')) {
+            return redirect()->route($this::$route . '.create')->with('message', 'Сохранено!');
+        } else {
+            return redirect()->route($this::$route . '.index')->with('message', 'Сохранено!');
+        }
+
     }
 
     public function show($id)

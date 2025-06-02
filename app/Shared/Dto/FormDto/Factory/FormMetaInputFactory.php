@@ -20,9 +20,9 @@ class FormMetaInputFactory
             $data['type'],
             key_exists('label', $data) ? $data['label'] : null,
             key_exists('options', $data) ? $this->formMetaOptionFactory->makeCollection($data['options']) : null,
-            key_exists('table', $data) ? $this->formMetaOptionFactory->makeCollection($data['table']) : null,
+            key_exists('table', $data) ? $this->formMetaTableFactory->make($data['table']) : null,
             key_exists('value', $data) ? $data['value'] : null,
-
+            key_exists('vanishValue', $data),
         );
     }
 

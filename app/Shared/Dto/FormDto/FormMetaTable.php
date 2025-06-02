@@ -11,7 +11,7 @@ class FormMetaTable
      * @param string $model
      * @param string $condition
      * @param Collection<IndexMetaColumn> $columnsTitles
-     * @param Collection<Collection<string>> $rows
+     * @param Collection|null $rows
      */
     public function __construct(
         public string $model,

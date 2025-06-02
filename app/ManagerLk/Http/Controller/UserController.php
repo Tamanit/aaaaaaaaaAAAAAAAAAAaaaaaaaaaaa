@@ -2,14 +2,14 @@
 
 namespace App\ManagerLk\Http\Controller;
 
-use App\ManagerLk\Http\Requset\UserRequest;
-use App\ManagerLk\ViewConfigFactory\UserViewConfigFactory;
+use App\ManagerLk\Http\Request\UserRequest;
+use App\Models\User;
+use App\RentLk\ViewConfigFactory\UserViewConfigFactory;
 use App\Shared\Http\Controllers\RestController;
-use App\Shared\Models\User;
 
 class UserController extends RestController
 {
-    public static string $route = 'users';
+    public static string $route = 'mg/users';
     protected string $model = User::class;
 
     public function __construct(
@@ -17,7 +17,7 @@ class UserController extends RestController
     ) {
         $this->createRequest = UserRequest::class;
         $this->updateRequest = UserRequest::class;
-        parent::$route = 'users';
+        parent::$route = self::$route;
         $this->viewConfig = $this->userViewConfigFactory->fill();
         parent::__construct();
     }

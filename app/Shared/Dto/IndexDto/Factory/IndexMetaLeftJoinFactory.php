@@ -12,7 +12,7 @@ class IndexMetaLeftJoinFactory
         return new IndexMetaLeftJoin(
             $data['table'],
             $data['foreignKey'],
-            $data['leftJoins'] ? $this->make($data['leftJoins']) : null
+            key_exists('leftJoins', $data)? $this->make($data['leftJoins']) : null
         );
     }
 

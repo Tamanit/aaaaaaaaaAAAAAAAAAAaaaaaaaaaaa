@@ -2,7 +2,7 @@
 
 namespace App\Shared\Service;
 
-use App\Shared\Models\User;
+use App\Models\User;
 
 class AuthService
 {

@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('rent_units', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
+            $table->string('code')->nullable();
             $table->foreignId('type_id')->constrained('rent_unit_types');
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 

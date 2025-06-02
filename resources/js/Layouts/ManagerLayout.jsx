@@ -27,18 +27,27 @@ export default ({children, title, isAuthenticated}) => {
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle nav caret>CRM</DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem href="/rents" onClick={route}>Аренды</DropdownItem>
-                                <DropdownItem href="/users" onClick={route}>Арендаторы</DropdownItem>
-                                <DropdownItem href="/reqs" onClick={route}>Обращения</DropdownItem>
+                                <DropdownItem href="/mg/rents" onClick={route}>Аренды</DropdownItem>
+                                <DropdownItem href="/mg/users" onClick={route}>Арендаторы</DropdownItem>
+                                <DropdownItem href="/mg/organizations" onClick={route}>Организации</DropdownItem>
+                                <DropdownItem href="/mg/reqs" onClick={route}>Обращения</DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle nav caret>Документы</DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem href="/contracts" onClick={route}>Договоры</DropdownItem>
-                                <DropdownItem href="/acts" onClick={route}>Акты</DropdownItem>
-                                <DropdownItem href="/bills" onClick={route}>Счета</DropdownItem>
-                                <DropdownItem href="/price-lists" onClick={route}>Прайс листы</DropdownItem>
+                                <DropdownItem href="/mg/contracts" onClick={route}>Договоры</DropdownItem>
+                                <DropdownItem href="/mg/acts" onClick={route}>Акты</DropdownItem>
+                                <DropdownItem href="/mg/bills" onClick={route}>Счета</DropdownItem>
+                                <DropdownItem href="/mg/price-lists" onClick={route}>Прайс листы</DropdownItem>
+                                <DropdownItem href="/mg/tariffs" onClick={route}>Тарифы</DropdownItem>
+                            </DropdownMenu>
+                        </UncontrolledDropdown>
+                        <UncontrolledDropdown nav inNavbar>
+                            <DropdownToggle nav caret>Сервис</DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem href="/mg/rent-unit-types" onClick={route}>Типы арендуемых единиц</DropdownItem>
+                                <DropdownItem href="/mg/rent-units" onClick={route}>Арендуемые еденицы</DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
                     </Nav>

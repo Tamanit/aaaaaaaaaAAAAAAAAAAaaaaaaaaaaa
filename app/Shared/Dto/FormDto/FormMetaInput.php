@@ -22,6 +22,7 @@ class FormMetaInput
         public ?Collection $options = null,
         public ?FormMetaTable $table = null,
         public ?string $value = null,
+        public bool $vanishValue = false,
     ) {
     }
 }

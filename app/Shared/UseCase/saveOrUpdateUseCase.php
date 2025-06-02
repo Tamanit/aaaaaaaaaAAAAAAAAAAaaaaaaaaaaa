@@ -2,7 +2,7 @@
 
 namespace App\Shared\UseCase;
 
-use App\ManagerLk\Http\Requset\UserRequest;
+use App\ManagerLk\Http\Request\UserRequest;
 use App\Shared\Service\RestService;
 use Illuminate\Http\Request;
 

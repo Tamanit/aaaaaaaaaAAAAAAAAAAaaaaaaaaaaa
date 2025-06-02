@@ -2,7 +2,6 @@
 
 namespace App\Shared\Service;
 
-use App\ManagerLk\Http\Requset\UserRequest;
 use App\Shared\Dto\FormDto\Factory\FormMetaInputFactory;
 use App\Shared\Dto\FormDto\FormMeta;
 use App\Shared\Dto\FormDto\FormMetaInput;
@@ -13,9 +12,15 @@ use App\Shared\Dto\ShowDto\ShowMeta;
 use App\Shared\Dto\ShowDto\ShowMetaBlock;
 use App\Shared\Enumeration\ErrorCodes;
 use App\Shared\Enumeration\InputTypes;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+use UnitEnum;
 
 class RestService
 {
@@ -45,24 +50,24 @@ class RestService
     /** @throws \Exception не задана модель */
     public function getPagination(IndexMeta $meta)
     {
-        $query = $this->checkModel()::whereNotNull('id');
-
+        $query = ($meta->table ?? $this->checkModel())::select($meta->columns->pluck('attribute')->toArray());
         if ($meta->leftJoins !== null) {
-            $this->connectLeftJoin($meta->leftJoins, $query, app($this->model)->getTable());
+            $query = $this->connectLeftJoin($meta->leftJoins, $query, app($this->model)->getTable());;
         }
 
-        return ($query->paginate(self::ROWS_PER_PAGE, $meta->columns->pluck('attribute')->toArray()));
+        return $query->paginate(self::ROWS_PER_PAGE);
     }
 
-    protected function connectLeftJoin(Collection $leftJoins, Builder &$query, string $mainTable): void
+    protected function connectLeftJoin(Collection $leftJoins, Builder $query, string $mainTable): Builder
     {
-        $leftJoins->each(function (IndexMetaLeftJoin $item) use (&$query, $mainTable) {
+        foreach ($leftJoins as $item) {
             $query = $query->leftJoin($item->table, "{$item->table}.id", '=', "{$mainTable}.{$item->foreignKey}");
 
             if ($item->leftJoins !== null) {
-                $this->connectLeftJoin($item->leftJoins, $query, $item->table);
+                $query = $this->connectLeftJoin($item->leftJoins, $query, $item->table);
             }
-        });
+        }
+        return $query;
     }
 
     public function insertCsrfTokenAndSubmitLink(FormMeta $meta, string $route): FormMeta
@@ -85,8 +90,58 @@ class RestService
      */
     public function saveOrUpdate(array $data, int $id = null): void
     {
+        $dataSortedInModels = [];
+        foreach ($data as $key => $value) {
+            $keys = explode('__', $key);
+
+            if (count($keys) === 3) {
+                $dataSortedInModels[$keys[0]][$keys[2]] = $value;
+                $dataSortedInModels[$keys[0]]['foreign_key'] = $keys[1];
+            } else {
+                $dataSortedInModels[$this->model][$keys[0]] = $value;
+            }
+//            dump($keys);
+        }
+
+//        dd($dataSortedInModels);
         if ($id === null) {
-            $this->checkModel()::create($data);
+            $targetModelData = [];
+            if (key_exists($this->model, $dataSortedInModels)) {
+                $targetModelData = $dataSortedInModels[$this->model];
+
+                foreach ($targetModelData as $key => $value) {
+                    if ($value instanceof UploadedFile ) {
+                        $fileName = Hash::make($value->getClientOriginalName()) . '.' . $value->getClientOriginalExtension();
+                        $value->move(public_path() . '/img',$fileName);
+                        $targetModelData[$key] = $fileName;
+                    }
+                }
+            }
+
+            $model = $this->checkModel()::create($targetModelData);
+
+            unset($dataSortedInModels[$this->model]);
+            $modelsAttributes = [];
+            foreach ($dataSortedInModels as $modelClass => $values) {
+                $foreignKey = $values['foreign_key'];
+                unset($values['foreign_key']);
+
+                foreach ($values as $key => $value) {
+                    foreach ($value as $k => $v) {
+                        $modelsAttributes[$modelClass][$k][$key] = $v;
+
+                        $modelsAttributes[$modelClass][$k][$foreignKey] = $model->id;
+                    }
+
+                }
+
+                foreach ($modelsAttributes as $model => $attributesPatch) {
+                    foreach ($attributesPatch as $attributes) {
+                        $model::create($attributes);
+                    }
+                }
+
+            }
         } else {
             $model = $this->checkModel()::findOrFail($id);
             $model->update($data);
@@ -104,12 +159,23 @@ class RestService
         $model = $this->checkModel()::findOrFail($id);
 
         $meta->inputs->map(function (FormMetaInput $input) use ($model) {
-            $input->value = $input->type === InputTypes::table
-                ? $this->fillTableInput($input->table, $model->id)
-                : $model->{$input->name};
+            if (!$input->vanishValue) {
+                $input->value = $input->type === InputTypes::table
+                    ? $this->fillTableInput($input->table, $model->id)
+                    : $this->fillInput($model, $input);
+            }
         });
 
         return $meta;
+    }
+
+    protected function fillInput($model, FormMetaInput $input)
+    {
+        if ($model->{$input->name} instanceof UnitEnum) {
+            return $model->{$input->name}->value;
+        } else {
+            return $model->{$input->name};
+        }
     }
 
     protected function fillTableInput(FormMetaTable $table, int $modelId): FormMetaTable
@@ -128,7 +194,8 @@ class RestService
         return $table;
     }
 
-    public function insertAttributes(ShowMeta $meta, int $id): ShowMeta {
+    public function insertAttributes(ShowMeta $meta, int $id): ShowMeta
+    {
         $model = $this->checkModel()::findOrFail($id);
 
         $meta->blocks->map(function (ShowMetaBlock $block) use ($model) {
@@ -143,11 +210,26 @@ class RestService
         if ($formRequest === null) {
             return $request->all();
         } else {
-            $formRequest = app(UserRequest::class);
-            $formRequest = $formRequest->createFrom($request);
-            $formRequest->setContainer(app())->setRedirector(app('redirect'));
+            $formRequestEntity = app($formRequest);
+            $formRequestEntity = $formRequestEntity->createFrom($request);
+            $formRequestEntity->setContainer(app())->setRedirector(app('redirect'));
 
-            return $formRequest->validated();
+            if (method_exists($formRequestEntity, 'authorize') && !$formRequestEntity->authorize()) {
+                abort(403, 'Недостаточно прав.');
+            }
+
+            $validator = Validator::make(
+                $formRequestEntity->all(),
+                $formRequestEntity->rules(),
+                $formRequestEntity->messages() ?? [],
+                $formRequestEntity->attributes() ?? []
+            );
+
+            if ($validator->fails()) {
+                throw new ValidationException($validator);
+            }
+
+            return $validator->validated();
         }
     }
 }

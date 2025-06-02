@@ -2,10 +2,10 @@
 
 namespace App\Shared\Http\Controllers;
 
+use App\Models\Act;
+use App\Models\ActRow;
+use App\Models\Contract;
 use App\Shared\Enumeration\ActType;
-use App\Shared\Models\Act;
-use App\Shared\Models\ActRow;
-use App\Shared\Models\Contract;
 use App\Shared\Service\RestService;
 
 class ActController extends RestController

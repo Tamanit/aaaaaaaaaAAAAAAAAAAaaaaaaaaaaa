@@ -1,10 +1,14 @@
 <?php
 
-use App\Shared\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
+use App\ManagerLk\Http\Controller\OrganizationController;
+use App\ManagerLk\Http\Controller\PriceListController;
+use App\ManagerLk\Http\Controller\RentUnitController;
+use App\ManagerLk\Http\Controller\RentUnitTypeController;
+use App\ManagerLk\Http\Controller\TariffController;
+use App\ManagerLk\Http\Controller\UserController;
+use App\RentLk\Http\Controller\BookingController;
+use App\RentLk\ViewConfigFactory\TariffViewConfigFactory;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-
 
 //Route::get('/', function () {
 //    return Inertia::render('Welcome', [
@@ -50,14 +54,33 @@ use Inertia\Inertia;
 
 Route::inertia('/', 'managerLk/Dashboard');
 
+Route::inertia('/lk', 'rentLk/Dashboard');
+
+
+//$controllers = [
+
+//];
 
 $controllers = [
-    \App\ManagerLk\Http\Controller\UserController::class,
+    \App\RentLk\Http\Controller\RentUnitTypeController::class,
+    UserController::class,
+    OrganizationController::class,
+    RentUnitTypeController::class,
+    RentUnitController::class,
+    PriceListController::class,
+    TariffController::class,
+    BookingController::class
 ];
 
 //Route::group(['middleware' => 'auth'], function () use ($controllers) {
 foreach ($controllers as $controller) {
     Route::resource($controller::$route, $controller);
 }
+
+Route::get('test', function () {
+    dd(
+       str_replace('\\', '?', \App\Models\User::class)
+    );
+});
 
 //});

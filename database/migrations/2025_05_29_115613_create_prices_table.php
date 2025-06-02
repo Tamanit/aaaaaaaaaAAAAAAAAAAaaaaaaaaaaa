@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('prices', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tariff_id')->constrained('tariffs');
-            $table->foreignId('price_list_id')->constrained('price_lists');
             $table->integer('period_in_months');
             $table->integer('sum_in_kopeck')->nullable();
         });

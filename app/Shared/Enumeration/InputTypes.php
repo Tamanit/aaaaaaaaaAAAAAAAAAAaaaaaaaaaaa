@@ -14,6 +14,10 @@ enum InputTypes implements JsonSerializable
     case button;
     case table;
     case hidden;
+    case textarea;
+    case number;
+    case file;
+    case datetime;
 
 
     public function jsonSerialize(): string
@@ -27,6 +31,10 @@ enum InputTypes implements JsonSerializable
             self::button => 'button',
             self::table => 'table',
             self::hidden => 'hidden',
+            self::textarea => 'textarea',
+            self::number => 'number',
+            self::file => 'file',
+            self::datetime => 'datetime',
         };
     }
 }

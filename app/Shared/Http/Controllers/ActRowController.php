@@ -2,10 +2,8 @@
 
 namespace App\Shared\Http\Controllers;
 
-use App\Shared\Enumeration\ActType;
-use App\Shared\Models\ActRow;
-use App\Shared\Models\Contract;
-use App\Shared\Models\RentUnit;
+use App\Models\ActRow;
+use App\Models\RentUnit;
 use App\Shared\Service\RestService;
 
 

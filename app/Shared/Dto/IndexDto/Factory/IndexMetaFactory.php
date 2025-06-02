@@ -18,6 +18,7 @@ class IndexMetaFactory
             $data['h2'],
             $data['page'],
             $this->indexMetaColumnFactory->makeCollection($data['columns']),
+            key_exists('table', $data) ? $data['table'] : null,
             key_exists('leftJoins', $data) ? $this->indexMetaLeftJoinFactory->makeCollection($data['leftJoins']) : null,
         );
     }

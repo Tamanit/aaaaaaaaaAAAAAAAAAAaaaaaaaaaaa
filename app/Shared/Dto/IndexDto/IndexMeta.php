@@ -14,6 +14,7 @@ class IndexMeta
         public string $h2,
         public string $page,
         public Collection $columns,
+        public ?string $table,
         public ?Collection $leftJoins = null,
     ) {
     }

@@ -2,8 +2,8 @@
 
 namespace App\Shared\Http\Controllers\Auth;
 
+use App\Models\User;
 use App\Shared\Http\Controllers\Controller;
-use App\Shared\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

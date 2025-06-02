@@ -22,7 +22,7 @@ class FormMetaTableFactory
         return new FormMetaTable(
             $data['model'],
             $data['condition'],
-            Collection::make($data['columnsTitle']),
+            $data['columnsTitle'],
             $rows
         );
     }

@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('booking_times', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('rent_unit_id')->constrained('rent_units');
+            $table->foreignId('rent_unit_type_id_id')->constrained('rent_unit_types');
             $table->foreignId('tariff_id')->constrained('tariffs');
-            $table->foreignId('price_list_id')->constrained('price_lists');
             $table->integer('free_hours_in_month')->nullable();
         });
     }

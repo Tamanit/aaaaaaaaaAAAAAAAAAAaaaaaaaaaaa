@@ -2,9 +2,11 @@
 
 namespace App\ManagerLk\ViewConfigFactory;
 
+use App\Models\Organization;
 use App\Shared\Dto\FormDto\Factory\FormMetaFactory;
 use App\Shared\Dto\IndexDto\Factory\IndexMetaFactory;
 use App\Shared\Enumeration\InputTypes;
+use App\Shared\Enumeration\UserRole;
 use App\Shared\ViewConfing\ViewConfig;
 
 class UserViewConfigFactory extends ViewConfig
@@ -25,6 +27,8 @@ class UserViewConfigFactory extends ViewConfig
                 ['id' => 'id'],
                 ['name' => 'name'],
                 ['email' => 'email'],
+                ['role' => 'Роль'],
+                ['organization_id' => 'Организация', '']
             ]
         ]);
         $viewConfig->createMeta = $this->formMetaFactory->make([
@@ -42,14 +46,28 @@ class UserViewConfigFactory extends ViewConfig
                     'type' => InputTypes::email,
                 ],
                 [
+                    'label' => 'Организация',
+                    'name' => 'organization_id',
+                    'type' => InputTypes::select,
+                    'options' => Organization::select('id as key', 'full_name as value')->get()->prepend(['id' => '', 'value' => 'Не задано'])->toArray(),
+                ],
+                [
+                    'label' => 'Роль',
+                    'name' => 'role',
+                    'type' => InputTypes::select,
+                    'options' => UserRole::toArray(),
+                ],
+                [
                     'label' => 'Пароль',
                     'name' => 'password',
                     'type' => InputTypes::password,
+                    'vanishValue' => true,
                 ],
                 [
                     'label' => 'Повтор пароля',
                     'name' => 'password_repeat',
                     'type' => InputTypes::password,
+                    'vanishValue' => true,
                 ],
             ]
         ]);
@@ -69,14 +87,28 @@ class UserViewConfigFactory extends ViewConfig
                     'type' => InputTypes::email,
                 ],
                 [
+                    'label' => 'Организация',
+                    'name' => 'organization_id',
+                    'type' => InputTypes::select,
+                    'options' => Organization::select('id as key', 'full_name as value')->get()->prepend(['id' => '', 'value' => 'Не задано'])->toArray(),
+                ],
+                [
+                    'label' => 'Роль',
+                    'name' => 'role',
+                    'type' => InputTypes::select,
+                    'options' => UserRole::toArray(),
+                ],
+                [
                     'label' => 'Пароль',
                     'name' => 'password',
                     'type' => InputTypes::password,
+                    'vanishValue' => true,
                 ],
                 [
                     'label' => 'Повтор пароля',
                     'name' => 'password_repeat',
                     'type' => InputTypes::password,
+                    'vanishValue' => true,
                 ],
             ]
         ]);
