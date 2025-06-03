@@ -1,5 +1,6 @@
 <?php
 
+use App\Enumeration\BookingStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,14 +14,10 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('rent_unit_id')->constrained('rent_units');
-//            $table->foreignId('user_id')->constrained('users');
-            $table->timestamp('book_at');
-            $table->timestamp('book_until');
-            $table->integer('time_in_minutes');
-            $table->enum('status', \App\Services\Shared\Enumeration\BookingStatus::toArray());
-            $table->softDeletes();
-            $table->timestamps();
+            $table->foreignId('room_id')->constrained('room');
+            $table->json('time_slots')->nullable();
+            $table->date('date');
+            $table->enum('status', BookingStatus::toArray());
         });
     }
 

@@ -12,10 +12,11 @@ import {
     UncontrolledAlert
 } from "reactstrap";
 import {router} from "@inertiajs/react";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import TableInput from "@/Components/TableInput.jsx";
+import TagInput from "@/components/TagInput/TagInput.jsx";
 
-function formDataToJson(formData) {
+function formDataToJson(formData, update) {
     const object = {};
 
     for (let [key, value] of formData.entries()) {
@@ -26,6 +27,8 @@ function formDataToJson(formData) {
 
             if (!object[field]) object[field] = [];
             object[field][index] = value;
+        } else if (update && value instanceof File) {
+            continue;
         } else {
             object[key] = value;
         }
@@ -44,6 +47,7 @@ export default ({meta, errors, id, flash}) => {
     const [values, setValues] = useState(vals);
     const [alerts, setAlerts] = useState([]);
     const [noRedirect, setNoRedirect] = useState(false);
+    const hasFile = useRef(false);
 
     useEffect(() => {
         flash.message
@@ -63,23 +67,14 @@ export default ({meta, errors, id, flash}) => {
 
         let formData = new FormData(e.target);
 
-        let object = formDataToJson(formData)
+        let object = formDataToJson(formData, !!id)
 
-        console.log(object)
-        if (id) {
-            router.put(
-                meta.submitLink + ('/' + id + noRedirect ? '?again=true' : ''),
-                object
-            )
-        } else {
-            router.post(
-                meta.submitLink + (noRedirect ? '?again=true' : ''),
-                object,
-                {
-                    forceFormData: true,
-                }
-            )
-        }
+        console.log(formData)
+        router.visit(meta.submitLink + (noRedirect ? '?again=true' : ''), {
+            method: id ? 'PUT' : 'POST',
+            forceFormData: !id && hasFile,
+            data: object
+        })
     }
 
     function handleChange(e) {
@@ -101,38 +96,49 @@ export default ({meta, errors, id, flash}) => {
                     encType="multipart/form-data"
                 >
                     {meta.inputs.map((input) => {
+                        input.type === 'file' ? hasFile.current = true : null
                         return (
                             input.type === 'table' ? <TableInput table={input.table} label={input.label}/> :
-                            <FormGroup row className="mb-4">
-                                {input.label ? <Label sm={3}>{input.label}</Label> : null}
-                                <Col sm={9} className="position-relative">
-                                    <Input
-                                        name={input.name}
-                                        id={input.name}
-                                        type={input.type}
-                                        placeholder={input.placeholder}
-                                        value={values[input.name]}
+                                input.type === 'array' ?
+                                    <FormGroup>
+                                        {input.label ? <Label sm={3}>{input.label}</Label> : null}
+                                        <TagInput name={input.name} tagsProps={JSON.parse(input.value)}/>
+                                        <FormFeedback tooltip>
+                                            {errors && errors[input.name] != undefined ? errors[input.name] : null}
+                                        </FormFeedback>
+                                    </FormGroup>
+                                    : <FormGroup row className="mb-4">
+                                        {input.label ? <Label sm={3}>{input.label}</Label> : null}
+                                        <Col sm={9} className="position-relative">
+                                            <Input
+                                                name={input.name}
+                                                id={input.name}
+                                                type={input.type}
+                                                placeholder={input.placeholder}
+                                                value={values[input.name]}
 
-                                        invalid={errors && errors[input.name] != undefined}
-                                        onChange={handleChange}
-                                    >
-                                        {input.options && input.options.map((option) => {
-                                            return (<option value={option.id}>{option.value}</option>)
-                                        })}
-                                    </Input>
+                                                invalid={errors && errors[input.name] != undefined}
+                                                onChange={handleChange}
+                                            >
+                                                {input.options && input.options.map((option) => {
+                                                    return (<option value={option.id}>{option.value}</option>)
+                                                })}
+                                            </Input>
 
-                                    <FormFeedback tooltip>
-                                        {errors && errors[input.name] != undefined ? errors[input.name] : null}
-                                    </FormFeedback>
-                                </Col>
-                            </FormGroup>
+
+                                        </Col>
+                                    </FormGroup>
                         )
                     })}
-                    <Button type="submit" color="success" onClick={(e) =>{setNoRedirect(false)}}>
+                    <Button type="submit" color="success" onClick={(e) => {
+                        setNoRedirect(false)
+                    }}>
                         Сохранить
                     </Button>
                     {
-                        !id ? <Button type="submit" color="default" onClick={(e) =>{setNoRedirect(true)}}>
+                        !id ? <Button type="submit" color="default" onClick={(e) => {
+                                setNoRedirect(true)
+                            }}>
                                 Сохранить и создать еще
                             </Button>
                             : null
@@ -147,6 +153,7 @@ export default ({meta, errors, id, flash}) => {
                     return <Alert key={i}>{alert}</Alert>
                 })}
             </Container>
+            <TagInput/>
         </ManagerLayout>
     )
         ;

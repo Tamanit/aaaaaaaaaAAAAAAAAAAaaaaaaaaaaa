@@ -9,7 +9,7 @@ use App\Models\User;
 
 class UserController extends RestController
 {
-    public static string $route = 'mg/users';
+    public static string $route = 'users';
     protected string $model = User::class;
 
     public function __construct(

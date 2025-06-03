@@ -1,86 +1,97 @@
 <?php
 
-use App\Http\Controllers\ManagerLk\OrganizationController;
-use App\Http\Controllers\ManagerLk\PriceListController;
-use App\Http\Controllers\ManagerLk\RentUnitController;
-use App\Http\Controllers\ManagerLk\RentUnitTypeController;
-use App\Http\Controllers\ManagerLk\TariffController;
-use App\Http\Controllers\ManagerLk\UserController;
-use App\Http\Controllers\TenantLk\BookingController;
-use App\RentLk\ViewConfigFactory\TariffViewConfigFactory;
+use App\Enumeration\UserRole;
+use App\Http\Middleware\RoleMiddleware;
+use App\Http\ViewConfigFactories\TenantLk\BookingViewConfigFactory;
 use Illuminate\Support\Facades\Route;
 
-//Route::get('/', function () {
-//    return Inertia::render('Welcome', [
-//        'canLogin' => Route::has('login'),
-//        'canRegister' => Route::has('register'),
-//        'laravelVersion' => Application::VERSION,
-//        'phpVersion' => PHP_VERSION,
-//    ]);
-//});
-//
-//Route::get('/dashboard', function () {
-//    return Inertia::render('Dashboard');
-//})->middleware(['auth', 'verified'])->name('dashboard');
-//
-//Route::get('/managerRent', function () {
-//    return Inertia::render('managerLk/ManagerRent');
-//})->name('managerRent');
-//
-//Route::get('/managerReq', function () {
-//    return Inertia::render('managerLk/ManagerReq');
-//})->name('managerReq');
-//
-//Route::get('/managerCreateAct', function () {
-//    return Inertia::render('managerLk/ManagerCreateAct');
-//})->name('managerCreateAct');
-//
-//Route::get('/managerOrganisation', function () {
-//    return Inertia::render('managerLk/ManagerOrganisation');
-//})->name('managerOrganisation');
-//
-//Route::get('/rentUnitDetail', function () {
-//    return Inertia::render('rentLk/RentUnitDetail');
-//})->name('rentUnitDetail');
-//
-//Route::middleware('auth')->group(function () {
-//    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-//});
-//
-//require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 //require __DIR__.'/managerLK.php';
 
-Route::inertia('/', 'managerLk/Dashboard');
-
-Route::inertia('/lk', 'rentLk/Dashboard');
-
-
-//$controllers = [
-
-//];
-
-$controllers = [
-    \App\Http\Controllers\TenantLk\RentUnitTypeController::class,
-    UserController::class,
-    OrganizationController::class,
-    RentUnitTypeController::class,
-    RentUnitController::class,
-    PriceListController::class,
-    TariffController::class,
-    BookingController::class
+$managerControllers = [
+    \App\Http\Controllers\ManagerLk\UserController::class,
+    \App\Http\Controllers\ManagerLk\OrganizationController::class,
+    \App\Http\Controllers\ManagerLk\RentUnitTypeController::class,
+    \App\Http\Controllers\ManagerLk\RentUnitController::class,
+    \App\Http\Controllers\ManagerLk\PriceListController::class,
+    \App\Http\Controllers\ManagerLk\TariffController::class,
+    \App\Http\Controllers\ManagerLk\RoomInventoryController::class,
+    \App\Http\Controllers\ManagerLk\RoomController::class,
 ];
 
-//Route::group(['middleware' => 'auth'], function () use ($controllers) {
-foreach ($controllers as $controller) {
-    Route::resource($controller::$route, $controller);
-}
+$tenantControllers = [
+    \App\Http\Controllers\TenantLk\RentUnitTypeController::class,
+    \App\Http\Controllers\TenantLk\BookingController::class
+];
 
-Route::get('test', function () {
+$managerRoles = [
+    UserRole::Administrator->value,
+    UserRole::Worker->value
+];
+
+$tenantRoles = [
+    UserRole::TenantOrganizationAdministrator->value,
+    UserRole::TenantRentOrganizationWorker->value,
+];
+
+
+Route::get('/', function () use ($tenantRoles, $managerRoles) {
+    if (!Auth::check()) {
+        return redirect('/login', 301);
+    }
+
+    if (in_array(Auth::user()->role->value, $managerRoles)) {
+        return redirect('/manager', 301);
+    }
+
+    if (in_array(Auth::user()->role->value, $tenantRoles)) {
+        return redirect('/tenant', 301);
+    }
+
+    return redirect('/login', 301);
+})->name('fuckingNullPoint');
+
+Route::group(['middleware' => 'auth'],
+    function () use ($managerControllers, $tenantControllers, $tenantRoles, $managerRoles) {
+        Route::middleware(RoleMiddleware::class . ':' . implode(',', $managerRoles))->group(
+            function () use ($managerControllers) {
+                Route::prefix('manager')->group(function () use ($managerControllers) {
+                    foreach ($managerControllers as $controller) {
+                        Route::resource($controller::$route, $controller);
+                        // костыль, для возможности отправки файлов при обновлении
+                        Route::post($controller::$route . '/update', [$controller, 'update']);
+                    }
+
+
+
+
+                    Route::inertia('/', 'managerLk/Dashboard');
+                });
+            }
+        );
+
+        Route::middleware(RoleMiddleware::class . ':' . implode(',', $tenantRoles))->group(
+            function () use ($tenantControllers) {
+                Route::prefix('tenant')->group(function () use ($tenantControllers) {
+                    foreach ($tenantControllers as $controller) {
+                        Route::resource($controller::$route, $controller);
+                    }
+
+                    Route::post('/booking/search', [\App\Http\Controllers\TenantLk\BookingController::class, 'search'])->name('booking.search');
+                    Route::get('/booking/createForm', [\App\Http\Controllers\TenantLk\BookingController::class, 'createBooking'])->name('booking.createForm');
+                    Route::post('booking/createBooking', [\App\Http\Controllers\TenantLk\BookingController::class, 'storeBooking'])->name('booking.storeBooking');
+                    Route::inertia('/', 'rentLk/Dashboard');
+                });
+            }
+        );
+    });
+
+Route::get('test', function () use ($managerRoles, $tenantControllers) {
+    $x = app(BookingViewConfigFactory::class)->fill();
+
+    $y = app(\App\Service\RestService::class)->setModel(\App\Models\User::class);
+
     dd(
-       str_replace('\\', '?', \App\Models\User::class)
+        $y->getPagination($x->indexMeta)
     );
 });
-
-//});

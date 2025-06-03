@@ -47,10 +47,10 @@ class RestController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(): \Inertia\Response
     {
         return Inertia::render($this->viewConfig->createMeta->page, [
-            'meta' => $this->getCreateFormUseCase->use($this->viewConfig->createMeta, self::$route)
+            'meta' => $this->getCreateFormUseCase->use($this->viewConfig->createMeta, route(self::$route . '.store', [], false))
         ]);
     }
 
@@ -77,7 +77,7 @@ class RestController extends Controller
     public function edit($id): \Inertia\Response
     {
         return Inertia::render($this->viewConfig->updateMeta->page, [
-            'meta' => $this->getUpdateFormUseCase->use($this->viewConfig->updateMeta, $this->model, self::$route, $id),
+            'meta' => $this->getUpdateFormUseCase->use($this->viewConfig->updateMeta, $this->model, route(self::$route . '.update', [$id], false), $id),
             'id' => $id
         ]);
     }

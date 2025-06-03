@@ -9,9 +9,9 @@ import {
     NavItem, NavLink,
     Pagination,
     PaginationItem,
-    PaginationLink, PopoverBody, PopoverHeader,
+    PaginationLink,
     Row,
-    Table, UncontrolledCollapse, UncontrolledPopover
+    Table, UncontrolledCollapse,
 } from "reactstrap";
 import {Link, router} from "@inertiajs/react";
 
@@ -43,11 +43,11 @@ export default ({meta, paginator}) => {
                             <tbody>
                             {paginator.data.map((row, i) => {
                                 return (<tr>
-                                    {meta.columns.map((columnName, i) => {
+                                    {meta.columns.map((columnName, j) => {
                                         let columnNameShort = columnName.attribute.substring(columnName.attribute.indexOf('.') + 1);
 
-                                        return (<td key={i}>{
-                                            typeof !(typeof row[columnNameShort] || row[columnNameShort] instanceof String) && row[columnNameShort].length > 50
+                                        return (<td key={j}>{
+                                            (typeof row[columnNameShort] === 'string' || row[columnNameShort] instanceof String) && row[columnNameShort].length > 50
                                                 ?
                                                 <>
                                                     <Button

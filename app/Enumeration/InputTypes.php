@@ -18,6 +18,7 @@ enum InputTypes implements JsonSerializable
     case number;
     case file;
     case datetime;
+    case array;
 
 
     public function jsonSerialize(): string
@@ -35,6 +36,7 @@ enum InputTypes implements JsonSerializable
             self::number => 'number',
             self::file => 'file',
             self::datetime => 'datetime',
+            self::array => 'array',
         };
     }
 }

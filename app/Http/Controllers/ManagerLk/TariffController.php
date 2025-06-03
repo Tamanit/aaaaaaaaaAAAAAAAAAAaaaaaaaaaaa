@@ -8,9 +8,11 @@ use App\Http\ViewConfigFactories\ManagerLk\TariffViewConfigFactory;
 use App\Models\Tariff;
 ;
 
-class TariffController extends RestController
+class
+
+TariffController extends RestController
 {
-    public static string $route = 'mg/tariffs';
+    public static string $route = 'tariffs';
     protected string $model = Tariff::class;
 
     public function __construct(

@@ -78,7 +78,7 @@ class RestService
                 ]
             )
         );
-        $meta->submitLink = "/{$route}";
+        $meta->submitLink = $route;
         return $meta;
     }
 
@@ -108,9 +108,9 @@ class RestService
 
                 foreach ($targetModelData as $key => $value) {
                     if ($value instanceof UploadedFile ) {
-                        $fileName = Hash::make($value->getClientOriginalName()) . '.' . $value->getClientOriginalExtension();
-                        $value->move(public_path() . '/img',$fileName);
-                        $targetModelData[$key] = $fileName;
+                        $targetModelData[$key] = $this->saveFile($value);
+                    } elseif (is_array($value)) {
+                        $targetModelData[$key] = json_encode($value, JSON_UNESCAPED_UNICODE);
                     }
                 }
             }
@@ -144,6 +144,14 @@ class RestService
             $model->update($data);
             $model->save();
         }
+    }
+
+    protected function saveFile(UploadedFile $file): string
+    {
+        $fileName = Hash::make($file->getClientOriginalName()) . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path() . '/img',$fileName);
+
+        return $fileName;
     }
 
     public function deleteById(int $id): void

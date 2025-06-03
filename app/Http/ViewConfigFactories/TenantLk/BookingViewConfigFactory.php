@@ -6,8 +6,10 @@ use App\Dto\FormDto\Factory\FormMetaFactory;
 use App\Dto\IndexDto\Factory\IndexMetaFactory;
 use App\Enumeration\InputTypes;
 use App\Http\ViewConfing\ViewConfig;
+use App\Models\Booking;
 use App\Models\RentUnit;
 use App\Models\RentUnitType;
+use App\Models\Room;
 
 class BookingViewConfigFactory extends ViewConfig
 {
@@ -23,14 +25,16 @@ class BookingViewConfigFactory extends ViewConfig
 
         $viewConfig->indexMeta = $this->indexMetaFactory->make([
             'h2' => 'Бронирования',
-            'page' => 'rentLk/IndexCards',
-            'table' => RentUnitType::class,
+            'page' => 'rentLk/IndexCardsBooking',
+            'table' => Room::class,
             'columns' => [
                 ['id' => ''],
                 ['name' => ''],
                 ['description' => ''],
+                ['inventory' => ''],
+                ['status' => ''],
                 ['img' => ''],
-                ['ing_alt' => ''],
+                ['img_alt' => ''],
             ]
         ]);
 

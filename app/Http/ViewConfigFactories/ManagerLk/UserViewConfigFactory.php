@@ -8,6 +8,7 @@ use App\Enumeration\InputTypes;
 use App\Enumeration\UserRole;
 use App\Http\ViewConfing\ViewConfig;
 use App\Models\Organization;
+use App\Models\User;
 
 class UserViewConfigFactory extends ViewConfig
 {
@@ -20,15 +21,25 @@ class UserViewConfigFactory extends ViewConfig
     public function fill(): ViewConfig
     {
         $viewConfig = new ViewConfig();
+
+        $organisationTable = app(Organization::class)->getTable();
+        $userTable = app(User::class)->getTable();
+
         $viewConfig->indexMeta = $this->indexMetaFactory->make([
             'h2' => 'Арендаторы',
             'page' => 'managerLk/Index',
             'columns' => [
-                ['id' => 'id'],
-                ['name' => 'name'],
-                ['email' => 'email'],
-                ['role' => 'Роль'],
-                ['organization_id' => 'Организация', '']
+                [$userTable . '.id' => 'id'],
+                [$userTable . '.name' => 'name'],
+                [$userTable . '.email' => 'email'],
+                [$userTable . '.role' => 'Роль'],
+                [$organisationTable . '.full_name' => 'Организация']
+            ],
+            'leftJoins' => [
+                [
+                    'table' => $organisationTable,
+                    'foreignKey' => 'organization_id',
+                ],
             ]
         ]);
         $viewConfig->createMeta = $this->formMetaFactory->make([
@@ -49,7 +60,9 @@ class UserViewConfigFactory extends ViewConfig
                     'label' => 'Организация',
                     'name' => 'organization_id',
                     'type' => InputTypes::select,
-                    'options' => Organization::select('id as key', 'full_name as value')->get()->prepend(['id' => '', 'value' => 'Не задано'])->toArray(),
+                    'options' => Organization::select('id as id', 'full_name as value')->get()->prepend(
+                        ['id' => '', 'value' => 'Не задано']
+                    )->toArray(),
                 ],
                 [
                     'label' => 'Роль',
@@ -90,7 +103,9 @@ class UserViewConfigFactory extends ViewConfig
                     'label' => 'Организация',
                     'name' => 'organization_id',
                     'type' => InputTypes::select,
-                    'options' => Organization::select('id as key', 'full_name as value')->get()->prepend(['id' => '', 'value' => 'Не задано'])->toArray(),
+                    'options' => Organization::select('id as id', 'full_name as value')->get()->prepend(
+                        ['id' => '', 'value' => 'Не задано']
+                    )->toArray(),
                 ],
                 [
                     'label' => 'Роль',

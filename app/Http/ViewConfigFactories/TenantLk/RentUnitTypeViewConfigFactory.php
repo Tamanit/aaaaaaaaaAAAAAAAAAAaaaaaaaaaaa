@@ -23,7 +23,7 @@ class RentUnitTypeViewConfigFactory extends ViewConfig
 
         $viewConfig->indexMeta = $this->indexMetaFactory->make([
             'h2' => 'Арендовать рабочее место ',
-            'page' => 'rentLk/IndexCards',
+            'page' => 'rentLk/IndexCardsRent',
             'table' => Tariff::class,
             'columns' => [
                 ['id' => ''],

@@ -4,10 +4,10 @@ import {
     DropdownMenu,
     UncontrolledDropdown,
     DropdownToggle,
-    DropdownItem, NavbarToggler, Collapse, NavbarText, NavLink, NavItem
+    DropdownItem, NavbarToggler, Collapse, NavbarText, NavLink, NavItem, Button
 } from "reactstrap";
 import Head from "../components/Head.jsx";
-import {Link, router} from '@inertiajs/react'
+import {Link, router, usePage} from '@inertiajs/react'
 import {useState} from "react";
 
 export function route(e) {
@@ -15,8 +15,26 @@ export function route(e) {
     router.visit(e.target.href);
 }
 
-export default ({children, title, isAuthenticated}) => {
+const tenantWorker = [
+    'Сотрудник арендатора'
+];
+
+const tenantAdmin = [
+    'Администратор арендатора'
+];
+
+
+
+export default ({children, title}) => {
     const [isOpen, setIsOpen] = useState(false);
+
+    const user = usePage().props.auth.user;
+
+    const checkAdmin = () => {
+        return tenantAdmin.includes(user.role);
+    }
+
+
     return (
         <>
             <Head title={title}/>
@@ -27,29 +45,31 @@ export default ({children, title, isAuthenticated}) => {
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle nav caret>Аренда</DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem href="/lk/rents" onClick={route}>Арендовать рабочее место</DropdownItem>
-                                <DropdownItem href="/lk/bookings" onClick={route}>Забронировать помещение</DropdownItem>
+                                {checkAdmin() ? <DropdownItem href="/tenant/rents" onClick={route}>Арендовать рабочее место</DropdownItem> : null}
+                                <DropdownItem href="/tenant/bookings" onClick={route}>Забронировать помещение</DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
+                        {checkAdmin() ?
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle nav caret>Документы</DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem href="//lkcontracts" onClick={route}>Договоры</DropdownItem>
-                                <DropdownItem href="/lk/acts" onClick={route}>Акты</DropdownItem>
-                                <DropdownItem href="/lk/bills" onClick={route}>Счета</DropdownItem>
-                                <DropdownItem href="/lk/price-lists" onClick={route}>Прайс листы</DropdownItem>
-                                <DropdownItem href="/lk/tariffs" onClick={route}>Тарифы</DropdownItem>
+                                <DropdownItem href="/tenant/contracts" onClick={route}>Договоры</DropdownItem>
+                                <DropdownItem href="/tenant/acts" onClick={route}>Акты</DropdownItem>
+                                <DropdownItem href="/tenant/bills" onClick={route}>Счета</DropdownItem>
+                                <DropdownItem href="/tenant/price-lists" onClick={route}>Прайс листы</DropdownItem>
+                                <DropdownItem href="/tenant/tariffs" onClick={route}>Тарифы</DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
+                            : null }
                         <NavItem>
-                            <NavLink href="/lk/components/">Нужна помощь?</NavLink>
+                            <NavLink href="/tenant/components/">Нужна помощь?</NavLink>
                         </NavItem>
                     </Nav>
                     <NavbarText>
-                        {isAuthenticated ? (
-                            <Link href="/logout" method="post" as="button">
+                        {user ? (
+                            <Button onClick={e => {e.preventDefault(); router.post('/logout')}}>
                                 Выйти
-                            </Link>
+                            </Button>
                         ) : (
                             <Link href="/login" method="get" as="button">
                                 Войти

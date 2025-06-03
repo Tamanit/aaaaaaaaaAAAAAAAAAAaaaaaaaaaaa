@@ -12,7 +12,7 @@ use App\Models\PriceList;
 
 class PriceListController extends RestController
 {
-    public static string $route = 'mg/price-lists';
+    public static string $route = 'price-lists';
     protected string $model = PriceList::class;
 
     public function __construct(

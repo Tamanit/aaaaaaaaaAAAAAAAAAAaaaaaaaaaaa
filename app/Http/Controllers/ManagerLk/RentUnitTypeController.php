@@ -9,7 +9,7 @@ use App\Models\RentUnitType;
 
 class RentUnitTypeController extends RestController
 {
-    public static string $route = 'mg/rent-unit-types';
+    public static string $route = 'rent-unit-types';
     protected string $model = RentUnitType::class;
 
     public function __construct(

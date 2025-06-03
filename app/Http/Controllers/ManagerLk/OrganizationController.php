@@ -9,7 +9,7 @@ use App\Models\Organization;
 
 class OrganizationController extends RestController
 {
-    public static string $route = 'mg/organizations';
+    public static string $route = 'organizations';
     protected string $model = Organization::class;
 
     public function __construct(

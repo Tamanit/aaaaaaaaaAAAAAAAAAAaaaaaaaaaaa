@@ -1,5 +1,6 @@
 <?php
 
+use App\Enumeration\RentStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,7 +22,7 @@ return new class extends Migration
 //            $table->foreignId('price_id')->constrained('prices');
 //            $table->foreignId('tariff_id')->constrained('tariffs');
 //            $table->foreignId('act_id')->constrained('acts');
-            $table->enum('status', \App\Services\Shared\Enumeration\RentStatus::toArray());
+            $table->enum('status', RentStatus::toArray());
             $table->timestamps();
         });
     }

@@ -3,12 +3,14 @@
 namespace App\Http\ViewConfigFactories\ManagerLk;
 
 
+use App\Dto\FormDto\Factory\FormMetaFactory;
 use App\Dto\FormDto\FormMetaInput;
 use App\Dto\IndexDto\Factory\IndexMetaFactory;
 use App\Enumeration\InputTypes;
 use App\Http\ViewConfing\ViewConfig;
 use App\Models\Addon;
 use App\Models\BookingTime;
+use App\Models\Price;
 use App\Models\PriceList;
 
 class TariffViewConfigFactory extends ViewConfig

@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('booking_times', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('rent_unit_type_id_id')->constrained('rent_unit_types');
-            $table->foreignId('tariff_id')->constrained('tariffs');
-            $table->integer('free_hours_in_month')->nullable();
-        });
+//        Schema::create('booking_times', function (Blueprint $table) {
+//            $table->id();
+//            $table->foreignId('rent_unit_type_id_id')->constrained('rent_unit_types');
+//            $table->foreignId('tariff_id')->constrained('tariffs');
+//            $table->integer('free_hours_in_month')->nullable();
+//        });
     }
 
     /**

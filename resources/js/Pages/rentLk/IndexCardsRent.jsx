@@ -7,13 +7,13 @@ import {
     CardText,
     CardTitle,
     Col,
-    Container, Input, Modal, ModalBody, ModalFooter, ModalHeader,
+    Container, FormFeedback, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader,
     Pagination,
     PaginationItem, PaginationLink,
     Row
 } from "reactstrap";
 import {router, usePage} from "@inertiajs/react";
-import {useState} from "react";
+import React, {useState} from "react";
 
 export default ({meta, paginator, linkToPublic}) => {
     const url = usePage().url;
@@ -23,47 +23,41 @@ export default ({meta, paginator, linkToPublic}) => {
 
     return (
         <RentLayout>
-
             <Container>
                 <h2>{meta.h2}</h2>
+                <Row>
+                    {paginator.data.map((row, i) => {
+                        return (
+                            <Col className="col-6">
+                                <Card>
+                                    {row.img ? <CardImg
+                                            alt={row.ing_alt}
+                                            src={linkToPublic + '/' + row.img}
+                                            style={{
+                                                height: 180
+                                            }}
+                                            top
+                                            width="100%"
+                                        />
+                                        : null}
+                                    <CardBody>
+                                        <CardTitle tag="h5">
+                                            {row.name}
+                                        </CardTitle>
 
-                {paginator.data.map((row, i) => {
-                    return (
-                        <Row
-                            className="mb-2"
-
-                        >
-                            <Col>
-                                <Row>
-                                    <Card top width="100%">
-                                        {row.img ? <CardImg
-                                                alt={row.ing_alt}
-                                                src={linkToPublic + '/' + row.img}
-                                                style={{
-                                                    height: 180
-                                                }}
-                                                top
-                                                width="100%"
-                                            />
-                                            : null}
-                                        <CardBody>
-                                            <CardTitle tag="h5">
-                                                {row.name}
-                                            </CardTitle>
-                                            <CardText>
-                                                {row.description}
-                                            </CardText>
-                                            <Button
-                                                onClick={toggle}>
-                                                Арендовать
-                                            </Button>
-                                        </CardBody>
-                                    </Card>
-                                </Row>
+                                        <CardText>
+                                            {row.description}
+                                        </CardText>
+                                        <Button
+                                            onClick={toggle}>
+                                            Арендовать
+                                        </Button>
+                                    </CardBody>
+                                </Card>
                             </Col>
-                        </Row>
-                    )
-                })}
+                        )
+                    })}
+                </Row>
                 <Row>
                     <Col className=" d-flex justify-content-center">
                         <Pagination className=" d-flex justify-content-center gap-3">
@@ -114,32 +108,43 @@ export default ({meta, paginator, linkToPublic}) => {
             </Container>
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalBody className="d-flex flex-column gap-2">
-                    <Input type="date"/>
-                    <ButtonGroup className="d-flex flex-wrap">
-                        <Button>09:00</Button>
-                        <Button>09:30</Button>
-                        <Button>10:00</Button>
-                        <Button>10:30</Button>
-                        <Button>11:00</Button>
-                        <Button>11:30</Button>
-                        <Button>12:00</Button>
-                        <Button>12:30</Button>
-                        <Button>13:00</Button>
-                        <Button>13:30</Button>
-                        <Button>14:00</Button>
-                        <Button>14:30</Button>
-                        <Button>15:00</Button>
-                        <Button>15:30</Button>
-                        <Button>16:00</Button>
-                        <Button>16:30</Button>
-                        <Button>17:00</Button>
-                        <Button>17:30</Button>
-                        <Button>18:00</Button>
-                    </ButtonGroup>
+                    <FormGroup row className="mb-4">
+                        <Label sm={3}>Желаемая дата аренды</Label>
+                        <Col sm={9} className="position-relative">
+                            <Input
+                                type="date"
+                            >
+                            </Input>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row className="mb-4">
+                        <Label sm={3}>Срок аренды</Label>
+                        <Col sm={9} className="position-relative">
+                            <Input
+                                type="select"
+                            >
+                                <option>1 месяц</option>
+                                <option>2 месяца</option>
+                                <option>3 месяца</option>
+                            </Input>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row className="mb-4">
+                        <Label sm={3}>Кол-во рабочих мест</Label>
+                        <Col sm={9} className="position-relative">
+                            <Input
+                                type="select"
+                            >
+                                <option>1 месяц</option>
+                                <option>2 месяца</option>
+                                <option>3 месяца</option>
+                            </Input>
+                        </Col>
+                    </FormGroup>
                 </ModalBody>
                 <ModalFooter>
                     <Button color="primary" onClick={toggle}>
-                        Забронировать
+                        Арендовать
                     </Button>
                 </ModalFooter>
             </Modal>

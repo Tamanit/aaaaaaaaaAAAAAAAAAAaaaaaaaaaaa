@@ -2,12 +2,12 @@
 
 namespace App\Http\ViewConfigFactories\ManagerLk;
 
-
-
 use App\Dto\FormDto\Factory\FormMetaFactory;
 use App\Dto\IndexDto\Factory\IndexMetaFactory;
 use App\Enumeration\InputTypes;
 use App\Http\ViewConfing\ViewConfig;
+use App\Models\RentUnitType;
+use App\Models\Tariff;
 
 class BookingTimeViewConfigFactory extends ViewConfig
 {

@@ -4,10 +4,10 @@ import {
     DropdownMenu,
     UncontrolledDropdown,
     DropdownToggle,
-    DropdownItem, NavbarToggler, Collapse, NavbarText
+    DropdownItem, NavbarToggler, Collapse, NavbarText, Button
 } from "reactstrap";
 import Head from "../components/Head.jsx";
-import {Link, router} from '@inertiajs/react'
+import {Link, router, usePage} from '@inertiajs/react'
 import {useState} from "react";
 
 export function route(e) {
@@ -15,8 +15,10 @@ export function route(e) {
     router.visit(e.target.href);
 }
 
-export default ({children, title, isAuthenticated}) => {
+export default ({children, title}) => {
     const [isOpen, setIsOpen] = useState(false);
+
+    const auth = usePage().props.auth;
     return (
         <>
             <Head title={title}/>
@@ -27,35 +29,37 @@ export default ({children, title, isAuthenticated}) => {
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle nav caret>CRM</DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem href="/mg/rents" onClick={route}>Аренды</DropdownItem>
-                                <DropdownItem href="/mg/users" onClick={route}>Арендаторы</DropdownItem>
-                                <DropdownItem href="/mg/organizations" onClick={route}>Организации</DropdownItem>
-                                <DropdownItem href="/mg/reqs" onClick={route}>Обращения</DropdownItem>
+                                <DropdownItem href="/manager/booking" onClick={route}>Бронирования</DropdownItem>
+                                <DropdownItem href="/manager/rents" onClick={route}>Аренды</DropdownItem>
+                                <DropdownItem href="/manager/users" onClick={route}>Арендаторы</DropdownItem>
+                                <DropdownItem href="/manager/organizations" onClick={route}>Организации</DropdownItem>
+                                <DropdownItem href="/manager/reqs" onClick={route}>Обращения</DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle nav caret>Документы</DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem href="/mg/contracts" onClick={route}>Договоры</DropdownItem>
-                                <DropdownItem href="/mg/acts" onClick={route}>Акты</DropdownItem>
-                                <DropdownItem href="/mg/bills" onClick={route}>Счета</DropdownItem>
-                                <DropdownItem href="/mg/price-lists" onClick={route}>Прайс листы</DropdownItem>
-                                <DropdownItem href="/mg/tariffs" onClick={route}>Тарифы</DropdownItem>
+                                <DropdownItem href="/manager/contracts" onClick={route}>Договоры</DropdownItem>
+                                <DropdownItem href="/manager/acts" onClick={route}>Акты</DropdownItem>
+                                <DropdownItem href="/manager/bills" onClick={route}>Счета</DropdownItem>
+                                <DropdownItem href="/manager/price-lists" onClick={route}>Прайс листы</DropdownItem>
+                                <DropdownItem href="/manager/tariffs" onClick={route}>Тарифы</DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle nav caret>Сервис</DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem href="/mg/rent-unit-types" onClick={route}>Типы арендуемых единиц</DropdownItem>
-                                <DropdownItem href="/mg/rent-units" onClick={route}>Арендуемые еденицы</DropdownItem>
+                                <DropdownItem href="/manager/rent-unit-types" onClick={route}>Типы арендуемых единиц</DropdownItem>
+                                <DropdownItem href="/manager/rent-units" onClick={route}>Арендуемые еденицы</DropdownItem>
+                                <DropdownItem href="/manager/rooms" onClick={route}>Помещения</DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
                     </Nav>
                     <NavbarText>
-                        {isAuthenticated ? (
-                            <Link href="/logout" method="post" as="button">
+                        {auth['user'] ? (
+                            <Button onClick={e => {e.preventDefault(); router.post('/logout')}}>
                                 Выйти
-                            </Link>
+                            </Button>
                         ) : (
                             <Link href="/login" method="get" as="button">
                                 Войти

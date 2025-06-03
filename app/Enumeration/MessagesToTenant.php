@@ -14,8 +14,9 @@ enum MessagesToTenant: string implements \JsonSerializable
     case CANCELED = 'Бронирование отменено';
     case PENDING_APPROVAL = 'Ваша заявка ожидает подтверждения';
     case BOOKING_NOT_AVAILABLE = 'Бронирование в данный момент недоступно';
-    case SELECT_ANOTHER_TIME = 'Выберите другое время';
+    case SELECT_ANOTHER_TIME = 'Выберите другое время, оно уже забронированно';
     case INSUFFICIENT_ACCESS = 'У вас нет прав для выполнения этого действия';
+    case SUCCESS_BOOKED = 'Успешно забронированно';
 
     public function jsonSerialize(): string
     {

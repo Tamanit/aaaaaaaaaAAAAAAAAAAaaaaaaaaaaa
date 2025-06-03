@@ -1,0 +1,887 @@
+{
+  "models": [
+    {
+      "name": "Act",
+      "properties": [
+        {
+          "name": "contract_id",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "signed",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "act_type_id",
+          "type": "fillable",
+          "dataType": ""
+        }
+      ],
+      "methods": [],
+      "namespace": "App\\Models",
+      "tableName": "acts"
+    },
+    {
+      "name": "ActRow",
+      "properties": [],
+      "methods": [],
+      "namespace": "App\\Models"
+    },
+    {
+      "name": "Addon",
+      "properties": [
+        {
+          "name": "name",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "description",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "price_list_id",
+          "type": "fillable",
+          "dataType": ""
+        }
+      ],
+      "methods": [],
+      "namespace": "App\\Models",
+      "tableName": "addons"
+    },
+    {
+      "name": "Bill",
+      "properties": [],
+      "methods": [],
+      "namespace": "App\\Models"
+    },
+    {
+      "name": "Booking",
+      "properties": [
+        {
+          "name": "rent_unit_id",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "book_at",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "book_until",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "organization_id",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "time_in_minutes",
+          "type": "fillable",
+          "dataType": ""
+        }
+      ],
+      "methods": [],
+      "namespace": "App\\Models",
+      "tableName": "bookings"
+    },
+    {
+      "name": "BookingTime",
+      "properties": [],
+      "methods": [],
+      "namespace": "App\\Models",
+      "tableName": "booking_time"
+    },
+    {
+      "name": "Contract",
+      "properties": [
+        {
+          "name": "contract_num",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "1c_contract_num",
+          "type": "fillable",
+          "dataType": ""
+        }
+      ],
+      "methods": [],
+      "namespace": "App\\Models",
+      "tableName": "contracts"
+    },
+    {
+      "name": "Organization",
+      "properties": [
+        {
+          "name": "full_name",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "ur_address",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "post_address",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "bank",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "inn",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "kpp",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "bank_account",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "bank_corr_account",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "bik",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "okpo",
+          "type": "fillable",
+          "dataType": ""
+        }
+      ],
+      "methods": [],
+      "namespace": "App\\Models",
+      "tableName": "organizations"
+    },
+    {
+      "name": "Payment",
+      "properties": [],
+      "methods": [],
+      "namespace": "App\\Models"
+    },
+    {
+      "name": "Price",
+      "properties": [],
+      "methods": [],
+      "namespace": "App\\Models",
+      "tableName": "prices"
+    },
+    {
+      "name": "PriceList",
+      "properties": [],
+      "methods": [
+        {
+          "name": "price",
+          "params": ""
+        },
+        {
+          "name": "addon",
+          "params": ""
+        },
+        {
+          "name": "bookingTime",
+          "params": ""
+        }
+      ],
+      "namespace": "App\\Models",
+      "tableName": "price_lists"
+    },
+    {
+      "name": "Rent",
+      "properties": [
+        {
+          "name": "registration_date",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "organization_id",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "price_id",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "number_of_places",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "rent_at",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "contract_id",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "tariff_id",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "status",
+          "type": "fillable",
+          "dataType": ""
+        }
+      ],
+      "methods": [],
+      "namespace": "App\\Models",
+      "tableName": "rents"
+    },
+    {
+      "name": "RentUnit",
+      "properties": [],
+      "methods": [],
+      "namespace": "App\\Models"
+    },
+    {
+      "name": "RentUnitType",
+      "properties": [],
+      "methods": [],
+      "namespace": "App\\Models"
+    },
+    {
+      "name": "RentUnitWorkplace",
+      "properties": [],
+      "methods": [],
+      "namespace": "App\\Models"
+    },
+    {
+      "name": "Req",
+      "properties": [],
+      "methods": [],
+      "namespace": "App\\Models",
+      "tableName": "reqs"
+    },
+    {
+      "name": "Tariff",
+      "properties": [
+        {
+          "name": "name",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "description",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "price_list_id",
+          "type": "fillable",
+          "dataType": ""
+        }
+      ],
+      "methods": [],
+      "namespace": "App\\Models",
+      "tableName": "tariffs"
+    },
+    {
+      "name": "User",
+      "properties": [
+        {
+          "name": "name",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "email",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "password",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "role",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "organization_id",
+          "type": "fillable",
+          "dataType": ""
+        }
+      ],
+      "methods": [],
+      "namespace": "App\\Models"
+    },
+    {
+      "name": "Workplace",
+      "properties": [],
+      "methods": [],
+      "namespace": "App\\Models"
+    }
+  ],
+  "controllers": [
+    {
+      "name": "AuthenticatedSessionController",
+      "methods": [
+        {
+          "name": "create",
+          "params": ""
+        },
+        {
+          "name": "store",
+          "params": "LoginRequest $request"
+        },
+        {
+          "name": "destroy",
+          "params": "Request $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers\\Auth"
+    },
+    {
+      "name": "ConfirmablePasswordController",
+      "methods": [
+        {
+          "name": "show",
+          "params": ""
+        },
+        {
+          "name": "store",
+          "params": "Request $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers\\Auth"
+    },
+    {
+      "name": "EmailVerificationNotificationController",
+      "methods": [
+        {
+          "name": "store",
+          "params": "Request $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers\\Auth"
+    },
+    {
+      "name": "EmailVerificationPromptController",
+      "methods": [
+        {
+          "name": "__invoke",
+          "params": "Request $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers\\Auth"
+    },
+    {
+      "name": "NewPasswordController",
+      "methods": [
+        {
+          "name": "create",
+          "params": "Request $request"
+        },
+        {
+          "name": "store",
+          "params": "Request $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers\\Auth"
+    },
+    {
+      "name": "PasswordController",
+      "methods": [
+        {
+          "name": "update",
+          "params": "Request $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers\\Auth"
+    },
+    {
+      "name": "PasswordResetLinkController",
+      "methods": [
+        {
+          "name": "create",
+          "params": ""
+        },
+        {
+          "name": "store",
+          "params": "Request $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers\\Auth"
+    },
+    {
+      "name": "RegisteredUserController",
+      "methods": [
+        {
+          "name": "create",
+          "params": ""
+        },
+        {
+          "name": "store",
+          "params": "Request $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers\\Auth"
+    },
+    {
+      "name": "VerifyEmailController",
+      "methods": [
+        {
+          "name": "__invoke",
+          "params": "EmailVerificationRequest $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers\\Auth"
+    },
+    {
+      "name": "AuthController",
+      "methods": [
+        {
+          "name": "login",
+          "params": ""
+        },
+        {
+          "name": "store",
+          "params": "LoginRequest $request"
+        },
+        {
+          "name": "destroy",
+          "params": "Request $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers"
+    },
+    {
+      "name": "BookingController",
+      "methods": [
+        {
+          "name": "__construct",
+          "params": "protected BookingViewConfigFactory $bookingViewConfigFactory,"
+        },
+        {
+          "name": "create",
+          "params": ""
+        }
+      ],
+      "namespace": "App\\Http\\Controllers"
+    },
+    {
+      "name": "Controller",
+      "methods": [],
+      "namespace": "App\\Http\\Controllers"
+    },
+    {
+      "name": "OrganizationController",
+      "methods": [
+        {
+          "name": "__construct",
+          "params": "protected OrganizationViewConfigFactory $organizationViewConfigFactory,"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers"
+    },
+    {
+      "name": "PriceListController",
+      "methods": [
+        {
+          "name": "__construct",
+          "params": "protected PriceListViewConfigFactory $viewConfigFactory"
+        }
+      ],
+      "namespace": "App\\ManagerLk\\Http\\Controller"
+    },
+    {
+      "name": "ProfileController",
+      "methods": [
+        {
+          "name": "edit",
+          "params": "Request $request"
+        },
+        {
+          "name": "update",
+          "params": "ProfileUpdateRequest $request"
+        },
+        {
+          "name": "destroy",
+          "params": "Request $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers"
+    },
+    {
+      "name": "RentUnitController",
+      "methods": [
+        {
+          "name": "__construct",
+          "params": "protected RentUnitViewConfigFactory $rentUnitViewConfigFactory,"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers"
+    },
+    {
+      "name": "RentUnitTypeController",
+      "methods": [
+        {
+          "name": "__construct",
+          "params": "protected RentUnitTypeViewConfigFactory $rentUnitTypeViewConfigFactory,"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers"
+    },
+    {
+      "name": "RentUnitTypeControllerTenant",
+      "methods": [
+        {
+          "name": "__construct",
+          "params": "protected RentUnitTypeViewConfigFactory $rentUnitTypeViewConfigFactory,"
+        },
+        {
+          "name": "rent",
+          "params": "Request $request"
+        },
+        {
+          "name": "getPrice",
+          "params": ""
+        }
+      ],
+      "namespace": "App\\Http\\Controllers"
+    },
+    {
+      "name": "RestController",
+      "methods": [
+        {
+          "name": "__construct",
+          "params": ""
+        },
+        {
+          "name": "index",
+          "params": ""
+        },
+        {
+          "name": "create",
+          "params": ""
+        },
+        {
+          "name": "store",
+          "params": "Request $request"
+        },
+        {
+          "name": "show",
+          "params": "$id"
+        },
+        {
+          "name": "edit",
+          "params": "$id"
+        },
+        {
+          "name": "update",
+          "params": "Request $request, $id"
+        },
+        {
+          "name": "destroy",
+          "params": "$id"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers"
+    },
+    {
+      "name": "TariffController",
+      "methods": [
+        {
+          "name": "__construct",
+          "params": "protected TariffViewConfigFactory $viewConfigFactory"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers"
+    },
+    {
+      "name": "UserController",
+      "methods": [
+        {
+          "name": "__construct",
+          "params": "protected UserViewConfigFactory $userViewConfigFactory,"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers"
+    }
+  ],
+  "services": [],
+  "relationships": [
+    {
+      "sourceModel": "Act",
+      "relationshipType": "hasOne",
+      "relationshipName": "bill",
+      "targetModel": "Bill"
+    },
+    {
+      "sourceModel": "Act",
+      "relationshipType": "hasMany",
+      "relationshipName": "actRows",
+      "targetModel": "ActRow"
+    },
+    {
+      "sourceModel": "Act",
+      "relationshipType": "belongsTo",
+      "relationshipName": "rent",
+      "targetModel": "Rent::class"
+    },
+    {
+      "sourceModel": "ActRow",
+      "relationshipType": "belongsTo",
+      "relationshipName": "act",
+      "targetModel": "Act"
+    },
+    {
+      "sourceModel": "Addon",
+      "relationshipType": "belongsTo",
+      "relationshipName": "priceList",
+      "targetModel": "PriceList::class"
+    },
+    {
+      "sourceModel": "Bill",
+      "relationshipType": "hasMany",
+      "relationshipName": "payments",
+      "targetModel": "Payment"
+    },
+    {
+      "sourceModel": "Booking",
+      "relationshipType": "belongsTo",
+      "relationshipName": "user",
+      "targetModel": "User::class"
+    },
+    {
+      "sourceModel": "Booking",
+      "relationshipType": "belongsTo",
+      "relationshipName": "rentUnit",
+      "targetModel": "RentUnit::class"
+    },
+    {
+      "sourceModel": "BookingTime",
+      "relationshipType": "belongsTo",
+      "relationshipName": "priceList",
+      "targetModel": "PriceList"
+    },
+    {
+      "sourceModel": "BookingTime",
+      "relationshipType": "belongsTo",
+      "relationshipName": "tariff",
+      "targetModel": "Tariff"
+    },
+    {
+      "sourceModel": "BookingTime",
+      "relationshipType": "belongsTo",
+      "relationshipName": "rentUnit",
+      "targetModel": "RentUnit"
+    },
+    {
+      "sourceModel": "Organization",
+      "relationshipType": "hasMany",
+      "relationshipName": "user",
+      "targetModel": "User"
+    },
+    {
+      "sourceModel": "Payment",
+      "relationshipType": "belongsTo",
+      "relationshipName": "bill",
+      "targetModel": "Bill::class"
+    },
+    {
+      "sourceModel": "Price",
+      "relationshipType": "hasMany",
+      "relationshipName": "rent",
+      "targetModel": "Rent::class"
+    },
+    {
+      "sourceModel": "Price",
+      "relationshipType": "belongsTo",
+      "relationshipName": "tariff",
+      "targetModel": "Tariff::class"
+    },
+    {
+      "sourceModel": "Price",
+      "relationshipType": "belongsTo",
+      "relationshipName": "priceList",
+      "targetModel": "PriceList::class"
+    },
+    {
+      "sourceModel": "Rent",
+      "relationshipType": "hasMany",
+      "relationshipName": "act",
+      "targetModel": "Act"
+    },
+    {
+      "sourceModel": "Rent",
+      "relationshipType": "hasMany",
+      "relationshipName": "workplace",
+      "targetModel": "Workplace"
+    },
+    {
+      "sourceModel": "Rent",
+      "relationshipType": "belongsTo",
+      "relationshipName": "contract",
+      "targetModel": "Contract"
+    },
+    {
+      "sourceModel": "Rent",
+      "relationshipType": "belongsTo",
+      "relationshipName": "organization",
+      "targetModel": "Organization"
+    },
+    {
+      "sourceModel": "Rent",
+      "relationshipType": "belongsTo",
+      "relationshipName": "price",
+      "targetModel": "Price"
+    },
+    {
+      "sourceModel": "Rent",
+      "relationshipType": "belongsTo",
+      "relationshipName": "tariff",
+      "targetModel": "Tariff"
+    },
+    {
+      "sourceModel": "RentUnit",
+      "relationshipType": "hasMany",
+      "relationshipName": "bookingTime",
+      "targetModel": "BookingTime::class"
+    },
+    {
+      "sourceModel": "RentUnit",
+      "relationshipType": "hasMany",
+      "relationshipName": "booking",
+      "targetModel": "Booking::class"
+    },
+    {
+      "sourceModel": "RentUnit",
+      "relationshipType": "hasMany",
+      "relationshipName": "actRows",
+      "targetModel": "ActRow::class"
+    },
+    {
+      "sourceModel": "RentUnit",
+      "relationshipType": "belongsTo",
+      "relationshipName": "type",
+      "targetModel": "RentUnitType::class"
+    },
+    {
+      "sourceModel": "RentUnit",
+      "relationshipType": "belongsToMany",
+      "relationshipName": "workplace",
+      "targetModel": "Workplace::class"
+    },
+    {
+      "sourceModel": "RentUnitType",
+      "relationshipType": "hasMany",
+      "relationshipName": "rentUnits",
+      "targetModel": "RentUnit::class"
+    },
+    {
+      "sourceModel": "Req",
+      "relationshipType": "belongsTo",
+      "relationshipName": "user",
+      "targetModel": "User"
+    },
+    {
+      "sourceModel": "Tariff",
+      "relationshipType": "hasMany",
+      "relationshipName": "price",
+      "targetModel": "Price"
+    },
+    {
+      "sourceModel": "Tariff",
+      "relationshipType": "hasMany",
+      "relationshipName": "bookingTime",
+      "targetModel": "BookingTime"
+    },
+    {
+      "sourceModel": "Tariff",
+      "relationshipType": "hasMany",
+      "relationshipName": "rent",
+      "targetModel": "Rent"
+    },
+    {
+      "sourceModel": "Workplace",
+      "relationshipType": "belongsTo",
+      "relationshipName": "rent",
+      "targetModel": "Rent::class"
+    },
+    {
+      "sourceModel": "Workplace",
+      "relationshipType": "belongsToMany",
+      "relationshipName": "rentUnit",
+      "targetModel": "RentUnit::class"
+    }
+  ],
+  "directories": {
+    ".": {
+      "models": [
+        "Act",
+        "ActRow",
+        "Addon",
+        "Bill",
+        "Booking",
+        "BookingTime",
+        "Contract",
+        "Organization",
+        "Payment",
+        "Price",
+        "PriceList",
+        "Rent",
+        "RentUnit",
+        "RentUnitType",
+        "RentUnitWorkplace",
+        "Req",
+        "Tariff",
+        "User",
+        "Workplace"
+      ],
+      "controllers": [
+        "AuthenticatedSessionController",
+        "ConfirmablePasswordController",
+        "EmailVerificationNotificationController",
+        "EmailVerificationPromptController",
+        "NewPasswordController",
+        "PasswordController",
+        "PasswordResetLinkController",
+        "RegisteredUserController",
+        "VerifyEmailController",
+        "AuthController",
+        "BookingController",
+        "Controller",
+        "OrganizationController",
+        "PriceListController",
+        "ProfileController",
+        "RentUnitController",
+        "RentUnitTypeController",
+        "RentUnitTypeControllerTenant",
+        "RestController",
+        "TariffController",
+        "UserController"
+      ]
+    }
+  }
+}

@@ -14,7 +14,7 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email',
             'organization_id' => 'present|exists:organizations,id|nullable',
             'role' => [
                 Rule::enum(UserRole::class),

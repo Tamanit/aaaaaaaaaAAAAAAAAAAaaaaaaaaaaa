@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class RentUnitTypeController extends RestController
 {
-    public static string $route = 'lk/rents';
+    public static string $route = 'rents';
     protected string $model = RentUnitType::class;
 
     public function __construct(
@@ -25,6 +25,9 @@ class RentUnitTypeController extends RestController
 
     public function rent(Request $request)
     {
+    }
 
+    public function getPrice()
+    {
     }
 }

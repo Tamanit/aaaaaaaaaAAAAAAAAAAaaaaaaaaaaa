@@ -10,7 +10,7 @@ use App\Models\RentUnit;
 
 class RentUnitController extends RestController
 {
-    public static string $route = 'mg/rent-units';
+    public static string $route = 'rent-units';
     protected string $model = RentUnit::class;
 
     public function __construct(

@@ -5,7 +5,7 @@ namespace App\UseCase\tenantLk;
 use App\Service\Tenant\RentService;
 use Illuminate\Http\Request;
 
-class rentRentUnit
+class rentRentUnitUseCase
 {
     public function __construct(
         protected RentService $rentService,
