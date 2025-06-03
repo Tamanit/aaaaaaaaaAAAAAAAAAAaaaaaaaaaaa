@@ -61,6 +61,7 @@ RUN chown -R www-data:www-data /var/www
 # Кешируем маршруты и виды
 RUN php artisan route:cache
 RUN php artisan view:cache
+RUN php artisan migtate
 
 USER www-data
 
